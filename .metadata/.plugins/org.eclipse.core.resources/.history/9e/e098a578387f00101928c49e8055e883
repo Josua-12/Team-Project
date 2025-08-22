@@ -1,0 +1,145 @@
+package com.shopping;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.shopping.model.*;
+import com.shopping.repository.*;
+import com.shopping.service.*;
+import com.shopping.util.Constants;
+/*
+ * == 메인 메뉴 ==
+ * 로그인되지 않음
+ * 
+ * 1. 사용자관리
+ * 2. 상품 보기
+ * 3. 주문 관리
+ * 0. 종료
+ * 
+ * 선택 : 1
+ * 
+ * == 사용자관리 메뉴 ==
+ * 1. 회원가입
+ * 2. 로그인
+ * 3. 로그아웃
+ * 4. 내 정보 보기
+ * 0. 돌아가기
+ * 선택: 1
+ * 
+ * == 회원가입 ==
+ * 아이디 (3자 이상, 영문/숫자): 
+ * 패스워드 (4자 이상): 
+ * 이름: 
+ * 
+ * 새로 생성됩니다.
+ * 새 사용자 등록!
+ * 회원가입 성공!
+ * 
+ *  환영합니다. [사용자]님!
+ *  초기 잔액: 10000.0원
+ *  
+ * 
+ * 
+ */
+
+/*
+ * 	* 구현 완료 순서
+ * 		1) Model Layer
+ * 			- User.java 
+ * 			- Serializable 구현
+ * 		2) Pesistance Layer
+ * 			- FileManager.java
+ * 		3) Repository Layer
+ * 			- UserReposiotry.java
+ * 			- CRUD 메서드 구현
+ * 		4) Service Layer
+ * 			- 비즈니스 로직 적용
+ * 			- 예외 처리 구현 
+ * 		5) Util Layer
+ * 			- Constant.java
+ * 		6) Controller Layer
+ * 			- UserController.java 		
+ * 											- 회원가입 테스트
+ * 		7) Main Application
+ * 			- Main.java			
+ */
+public class Main {
+    public static void main(String[] args) {
+        try {
+            // 데이터 파일 경로 (환경에 맞게 조정)
+            String orderFilePath = "data/orders.dat";
+
+            // 리포지토리 초기화
+            OrderRepository orderRepo = new DefaultFileOrderRepository(orderFilePath);
+            ProductRepository productRepo = new FileProductRepository();
+            UserRepository userRepo = new FileUserRepository();
+            AdminRepository adminRepo = new AdminRepository() {
+                // 또는 AdminRepository 구현체 사용
+            };
+            AdminRepository fileAdminRepo = new AdminRepository() {
+                // 사용자에게 제공된 AdminRepository 구현체로 대체
+            };
+
+            // FileOrderRepository 형 변환필요 시 캐스팅
+            FileOrderRepository fileOrderRepo = (orderRepo instanceof FileOrderRepository)
+                    ? (FileOrderRepository) orderRepo : null;
+
+            // 서비스 계층 초기화
+            OrderService orderService = new OrderService(orderRepo, productRepo, fileOrderRepo);
+            ProductService productService = new ProductService((FileProductRepository) productRepo);
+            UserService userService = new UserService((FileUserRepository) userRepo);
+            AdminService adminService = new AdminService(adminRepo);
+
+            // 인증 및 권한 서비스
+            AuthService authService = new AuthService(userRepo, adminRepo);
+            AuthorizationService authorizationService = new AuthorizationService(authService);
+
+            // --- 기본 데이터 생성 테스트 ---
+
+            // 관리자 계정 확인 및 생성
+            if (adminRepo.count() == 0) {
+                Admin admin = authService.registerAdmin("admin", "admin123", "admin@shopping.com", "관리자");
+                System.out.println("관리자 계정 생성: " + admin.getId());
+            }
+
+            // 사용자 등록
+            User user = authService.registerUser("user1", "pass1234", "user1@example.com", "테스트사용자");
+            System.out.println("사용자 등록: " + user.getId());
+
+            // 상품 생성
+            Product prod = new Product();
+            prod.setName("테스트 노트북");
+            prod.setPrice(1500000);
+            prod.setStock(10);
+            prod.setCategory(ProductCategory.ELECTRONICS);
+            Product savedProduct = productService.addProduct(prod);
+            System.out.println("상품 등록 완료: " + savedProduct.getId());
+
+            // 주문 생성
+            OrderItem item = new OrderItem(savedProduct.getId(), 1, savedProduct.getPrice());
+            List<OrderItem> items = List.of(item);
+            Order order = orderService.placeOrder(user.getId(), items, Role.USER);
+            System.out.println("주문 생성 ID: " + order.getOrderId());
+
+            // 주문 상태 변경 테스트
+            orderService.confirmOrder(order.getOrderId(), user.getId(), Role.USER, null);
+            System.out.println("주문 상태 변경 후: " + order.getStatus());
+
+            // 사용자 로그인 테스트
+            Role loginRole = authService.login("user1@example.com", "pass1234");
+            System.out.println("사용자 로그인 성공, 권한: " + loginRole);
+
+        } catch (Exception e) {
+            System.err.println("오류 발생: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+
+
+
