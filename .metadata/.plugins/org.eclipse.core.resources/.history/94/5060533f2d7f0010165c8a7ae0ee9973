@@ -1,0 +1,39 @@
+package com.shopping.test;
+
+public class AllTest {
+
+	@Test
+	public void testUserFlow() throws Exception {
+	    // 1. 회원가입
+	    User user = authService.registerUser("testuser", "password123", "testuser@example.com", "Test User");
+	    assertNotNull(user);
+
+	    // 2. 로그인
+	    Role role = authService.login("testuser@example.com", "password123");
+	    assertEquals(Role.USER, role);
+
+	    // 3. 상품 추가 (관리자 역할 필요)
+	    Admin admin = authService.registerAdmin("admin1", "adminpass", "admin1@example.com", "Admin1");
+	    session.login(admin.getId(), Role.ADMIN, admin); // 세션 세팅
+	    Product product = new Product(null, "Test Product", ProductCategory.전자제품, 10000, 100, "테스트용 상품");
+	    Product savedProduct = productService.addProduct(product);
+	    assertNotNull(savedProduct.getId());
+
+	    // 4. 장바구니에 상품 추가
+	    session.login(user.getId(), Role.USER, user); // 사용자 로그인 세팅
+	    Cart cart = cartRepository.findByUserId(user.getId()).orElse(new Cart(user.getId()));
+	    cart.addProduct(savedProduct, 2);
+	    cartRepository.save(cart);
+
+	    // 5. 주문 생성
+	    List<OrderItem> orderItems = List.of(OrderItem.fromProduct(savedProduct, 2));
+	    Order order = orderService.placeOrder(user.getId(), orderItems, Role.USER);
+	    assertEquals(OrderStatus.PENDING, order.getStatus());
+
+	    // 6. 주문 확정
+	    orderService.confirmOrder(order.getOrderId(), user.getId(), Role.USER, session);
+	    Order updatedOrder = orderService.getOrder(order.getOrderId(), user.getId(), Role.USER, session);
+	    assertEquals(OrderStatus.CONFIRMED, updatedOrder.getStatus());
+	}
+
+}
