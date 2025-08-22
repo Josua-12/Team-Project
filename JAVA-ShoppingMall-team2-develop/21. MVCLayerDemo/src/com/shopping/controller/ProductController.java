@@ -176,7 +176,7 @@ public class ProductController {
             System.out.println("ID: " + product.getId());
             System.out.println("이름: " + product.getName());
             System.out.println("카테고리: " + product.getCategory().name());
-            System.out.println("가격: " + String.format("%,.0f원", product.getPrice()));
+            System.out.println("가격: " + String.format("%,d원", product.getPrice()));
             System.out.println("재고: " + product.getStock() + "개");
             System.out.println("상품 설명: " + product.getDescription());
             System.out.println("등록일시: " + product.getRegistrationDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
