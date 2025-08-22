@@ -39,47 +39,51 @@ public class MainController {
 
     public void start() {
         while (true) {
-            if (!session.isLoggedIn()) {
-                showGuestMenu();
-                String sel = sc.nextLine().trim();
-                switch (sel) {
-                    case "1" -> userController.register();          // 회원가입
-                    case "2" -> userController.login();             // 로그인
-//                    case "3" -> browseProducts();    				// 상품 둘러보기
-                    case "4" -> {                    				// 프로그램 종료
-                        System.out.println("프로그램을 종료합니다.");
-                        return;
-                    }
-                    default -> warn();
-                }
-            } else if (session.getRole() == Role.USER) {
-                showUserMenu(session.getUserId());
-                String sel = sc.nextLine().trim();
-                switch (sel) {
-//                    case "1" -> browseProducts();      // 상품 둘러보기
-//                    case "2" -> searchProducts();      // 상품 검색
-                    case "3" -> cartController.runCartMenu(session.getUserId());	// 장바구니 관리
-                    case "4" -> orderController.orderMenu();   			// 주문하기 (2.4.1)
-                    case "5" -> orderController.orderHistoryMenu(); 	// 주문 내역 (2.4.2)
-                    case "6" -> userController.myPage(session.getUser());   // 마이페이지
-                    case "7" -> userController.logout();            		// 로그아웃
-                    default -> warn();
-                }
-            } else { // ADMIN
-                showAdminMenu();
-                String sel = sc.nextLine().trim();
-                switch (sel) {
-//                    case "1" -> browseProducts();                   // 상품 둘러보기
-//                    case "2" -> searchProducts();                   // 상품 검색
-                    case "3" -> cartController.runCartMenu(session.getUserId());// 장바구니 관리
-                    case "4" -> orderController.orderMenu();   				// 주문하기 (2.4.1)
-                    case "5" -> orderController.orderHistoryMenu(); 		// 주문 내역 (2.4.2)
-                    case "6" -> userController.myPage(session.getUser());   // 마이페이지
-                    case "7" -> userController.logout();            		// 로그아웃
-                    case "8" -> adminController.handleProductManagement();	// [관리] 상품 관리
-                    case "9" -> adminController.handleUserManagement();     // [관리] 사용자 관리
-                    default -> warn();
-                }
+        	try {
+	            if (!session.isLoggedIn()) {
+	                showGuestMenu();
+	                String sel = sc.nextLine().trim();
+	                switch (sel) {
+	                    case "1" -> safeRun(() -> userController.register(), "회원가입");
+	                    case "2" -> safeRun(() -> userController.login(), "로그인");
+	                    // case "3" -> safeRun(() -> browseProducts(), "상품 둘러보기");
+	                    case "4" -> { // 프로그램 종료
+	                        System.out.println("프로그램을 종료합니다.");
+	                        return;
+	                    }
+	                    default -> warn();
+	                }
+	            } else if (session.getRole() == Role.USER) {
+	                showUserMenu(session.getUserId());
+	                String sel = sc.nextLine().trim();
+	                switch (sel) {
+	                    // case "1" -> safeRun(() -> browseProducts(), "상품 둘러보기");
+	                    // case "2" -> safeRun(() -> searchProducts(), "상품 검색");
+	                    case "3" -> safeRun(() -> cartController.runCartMenu(session.getUserId()), "장바구니 관리");
+	                    case "4" -> safeRun(() -> orderController.orderMenu(), "주문 메뉴 처리");
+	                    case "5" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
+	                    case "6" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
+	                    case "7" -> safeRun(() -> userController.logout(), "로그아웃");
+	                    default -> warn();
+	                }
+	            } else { // ADMIN
+	                showAdminMenu();
+	                String sel = sc.nextLine().trim();
+	                switch (sel) {
+	                    // case "1" -> safeRun(() -> browseProducts(), "상품 둘러보기");
+	                    // case "2" -> safeRun(() -> searchProducts(), "상품 검색");
+	                    case "3" -> safeRun(() -> cartController.runCartMenu(session.getUserId()), "장바구니 관리");
+	                    case "4" -> safeRun(() -> orderController.orderMenu(), "주문 메뉴 처리");
+	                    case "5" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
+	                    case "6" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
+	                    case "7" -> safeRun(() -> userController.logout(), "로그아웃");
+	                    case "8" -> safeRun(() -> adminController.handleProductManagement(), "관리/상품 관리");
+	                    case "9" -> safeRun(() -> adminController.handleUserManagement(), "관리/사용자 관리");
+	                    default -> warn();
+	                }
+	            } 
+        	} catch (java.util.NoSuchElementException e) {
+                return; // ✅ 안전 탈출
             }
         }
     }
@@ -158,10 +162,10 @@ public class MainController {
 //        cartController.menu(session);
 //    }
 //
-      //마이페이지
-      private void myPage() {
-    	  userController.myPage(session.getUser());
-      }
+//      //마이페이지
+//      private void myPage() {
+//    	  userController.myPage(session.getUser());
+//      }
 //
 //    // 로그아웃
 //    private void logout() {
@@ -179,4 +183,9 @@ public class MainController {
 //    }
 
     private void warn() { System.out.println("잘못된 선택입니다."); }
+    
+    private void safeRun(Runnable r, String label) {
+        try { r.run(); }
+        catch (Exception e) { System.out.println("[경고] " + label + " 중 오류: " + e.getMessage()); }
+    }
 }

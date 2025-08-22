@@ -27,6 +27,11 @@ public class OrderController {
         System.out.println("3. 배송 주소 입력 (기본값: 회원 주소)");
         System.out.println("4. 주문 확인 및 최종 결재");
 
+        if (!sc.hasNextInt()) {
+            if (sc.hasNext()) sc.next(); // 잘못된 토큰 소비
+            System.out.println("숫자를 입력해 주세요.");
+            return; // 서비스 호출 없이 종료
+        }
         int choice = sc.nextInt();
         sc.nextLine();
 
@@ -46,6 +51,11 @@ public class OrderController {
         System.out.println("2. 주문 상세 정보 조회");
         System.out.println("3. 주문 취소 (PENDING 상태만)");
 
+        if (!sc.hasNextInt()) {
+            if (sc.hasNext()) sc.next(); // 잘못된 토큰 소비
+            System.out.println("숫자를 입력해 주세요.");
+            return; // 서비스 호출 없이 종료
+        }
         int choice = sc.nextInt();
         sc.nextLine();
 

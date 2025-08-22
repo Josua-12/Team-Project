@@ -17,4 +17,5 @@ public class Session {
     public Role getRole() { return role; }
     public void login(String userId, Role role, User user) { this.userId = userId; this.role = role; this.user = user; }
     public void logout() { this.userId = null; this.role = null; this.user = null; }
+	
 }

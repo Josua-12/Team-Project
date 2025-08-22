@@ -1,4 +1,4 @@
-package com.shopping.test;
+package com.shopping.test.Order;
 
 import static org.junit.jupiter.api.Assertions.*;
 
