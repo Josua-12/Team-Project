@@ -1,7 +1,9 @@
 package com.shopping.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.shopping.model.OrderStatus;
 import com.shopping.service.ReportService;
@@ -67,6 +69,67 @@ public class ReportController {
 	            System.out.printf("  %-10s : %d건%n", status, count);
 	        }
 	    }
+	    
+	    
+	    /*
+	     * 콘솔 메뉴를 통한 통계 조회
+	     */
+	    public void ReportServiceSearchMenu() {
+	        Scanner scanner = new Scanner(System.in);
+	        
+	        while (true) {
+	            System.out.println("\n┌───────────────────────────────┐");
+	            System.out.println("│        📊 매출/주문 통계        │");
+	            System.out.println("├───────────────────────────────┤");
+	            System.out.println("│ 1. 특정 기간 매출 조회          │");
+	            System.out.println("│ 2. 인기 상품 TOP N 조회         │");
+	            System.out.println("│ 3. 주문 상태별 건수 조회        │");
+	            System.out.println("│ 0. 뒤로가기                     │");
+	            System.out.println("└───────────────────────────────┘");
+	            System.out.print("선택> ");
+
+	            String input = scanner.nextLine();
+
+	            switch (input) {
+	                case "1":
+	                    try {
+	                        System.out.print("시작날짜 (yyyy-MM-dd) : ");
+	                        LocalDate from = LocalDate.parse(scanner.nextLine());
+	                        System.out.print("끝나는 날짜 (yyyy-MM-dd) : ");
+	                        LocalDate to = LocalDate.parse(scanner.nextLine());
+	                        printSalesByDate(from, to);
+	                    } catch (DateTimeParseException e) {
+	                        System.out.println("⚠️ 날짜 형식이 올바르지 않습니다.");
+	                    }
+	                    break;
+
+	                case "2":
+	                    try {
+	                        System.out.print("조회할 TOP N 숫자 입력 : ");
+	                        int n = Integer.parseInt(scanner.nextLine());
+	                        printTopProducts(n);
+	                    } catch (NumberFormatException e) {
+	                        System.out.println("⚠️ 숫자를 올바르게 입력하세요.");
+	                    }
+	                    break;
+
+	                case "3":
+	                    printOrderCountByStatus();
+	                    break;
+
+	                case "0":
+	                    System.out.println("메뉴를 종료하고 이전 화면으로 돌아갑니다.");
+	                    return;
+
+	                default:
+	                    System.out.println("⚠️ 잘못된 선택입니다. 다시 입력해 주세요.");
+	            }
+	        }
+	    }
+
+	    
+	    
+	    
 	
 	
 	
