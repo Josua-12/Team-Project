@@ -13,9 +13,7 @@ import com.shopping.service.AuthService;
 import com.shopping.service.OrderService;
 import com.shopping.repository.DefaultFileOrderRepository;
 import com.shopping.repository.FileAdminRepository;
-import com.shopping.repository.FileOrderRepository;
 import com.shopping.repository.FileUserRepository;
-
 
 /**
  * 사용자 관련 UI를 담당하는 컨트롤러 
@@ -36,7 +34,6 @@ public class UserController {
 	    DefaultFileOrderRepository orderRepo = new DefaultFileOrderRepository("data/orders.dat");
 	    this.userService = new UserService(userRepo);
 	    this.authService = new AuthService(userRepo, adminRepo);
-	    this.orderService = new OrderService(orderRepo, null, orderRepo);
 	    this.scanner = new Scanner(System.in);
 	    this.session = session;
 	}
