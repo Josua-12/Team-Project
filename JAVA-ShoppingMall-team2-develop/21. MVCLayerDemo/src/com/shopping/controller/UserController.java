@@ -226,14 +226,15 @@ public class UserController {
 	           System.out.println("이미 로그인되어 있습니다.");
 	           return;
 	       }
-	      // ----- 아이디 입력 추가 2025.08.23 19:41 조수아 
-	      System.out.print("아이디: ");
-	      String id = scanner.nextLine();
-	      // -----
-	       System.out.print("이메일: ");
-	       String email = scanner.nextLine();
+	       // ----- 아이디 입력 추가 2025.08.23 19:41 조수아 
+	       System.out.print("아이디: ");
+	       String id = scanner.nextLine();
+	       // ----- 아이디 -> 패스워드 -> 이메일 순서 변경 2025.08.23 20:22 장하은
 	       System.out.print("패스워드: ");
 	       String password = scanner.nextLine();
+	       System.out.print("이메일: ");
+	       String email = scanner.nextLine();
+	       // -----
 	       
 	       try {
 	           Role role = authService.login(email, password);  // Role 반환받기
