@@ -217,36 +217,39 @@ public class UserController {
 			System.out.println("회원가입 실패: " + e.getMessage());
 		}
 	}
-
+	
 	// 로그인 처리
-	public void login() {
-	    System.out.println("\n== 로그인 ==");
-
-	    if (session.isLoggedIn()) {
-	        System.out.println("이미 로그인되어 있습니다.");
-	        return;
-	    }
-
-	    System.out.print("이메일: ");
-	    String email = scanner.nextLine();
-	    System.out.print("패스워드: ");
-	    String password = scanner.nextLine();
-
-	    try {
-	        Role role = authService.login(email, password);  // Role 반환받기
-	        Object loggedUser = authService.getLoggedInUser();
-
-	        if (role == Role.USER && loggedUser instanceof User user) {
-	            session.login(user.getId(), Role.USER, user);
-	            System.out.println("로그인 성공! 회원: " + user.getName());
-	        } else if (role == Role.ADMIN && loggedUser instanceof Admin admin) {
-	            session.login(admin.getId(), Role.ADMIN, null);
-	            System.out.println("로그인 성공! 관리자: " + admin.getName());
-	        }
-	    } catch (Exception e) {
-	        System.out.println("로그인 실패: " + e.getMessage());
-	    }
-	}
+	   public void login() {
+	       System.out.println("\n== 로그인 ==");
+	       
+	       if (session.isLoggedIn()) {
+	           System.out.println("이미 로그인되어 있습니다.");
+	           return;
+	       }
+	      // ----- 아이디 입력 추가 2025.08.23 19:41 조수아 
+	      System.out.print("아이디: ");
+	      String id = scanner.nextLine();
+	      // -----
+	       System.out.print("이메일: ");
+	       String email = scanner.nextLine();
+	       System.out.print("패스워드: ");
+	       String password = scanner.nextLine();
+	       
+	       try {
+	           Role role = authService.login(email, password);  // Role 반환받기
+	           Object loggedUser = authService.getLoggedInUser();
+	           
+	           if (role == Role.USER && loggedUser instanceof User user) {
+	               session.login(user.getId(), Role.USER, user);
+	               System.out.println("로그인 성공! 회원: " + user.getName());
+	           } else if (role == Role.ADMIN && loggedUser instanceof Admin admin) {
+	               session.login(admin.getId(), Role.ADMIN, null);
+	               System.out.println("로그인 성공! 관리자: " + admin.getName());
+	           }
+	       } catch (Exception e) {
+	           System.out.println("로그인 실패: " + e.getMessage());
+	       }
+	   }
 
 
 
