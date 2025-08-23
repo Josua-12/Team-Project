@@ -17,11 +17,43 @@ import java.util.stream.Collectors;
  * FileManager를 사용하여 파일에서 데이터를 읽고 쓰는 역할을 담당합니다.
  * ProductRepository 인터페이스의 파일 기반 구현체입니다.
  */
-public abstract class FileProductRepository implements ProductRepository {
 
-    private final Map<String, Product> productStore = new HashMap<>();
+public class FileProductRepository implements ProductRepository {
+	// 2025.08.23 17:12 JHE 수정
+	private final Map<String, Product> productStore = new HashMap<>();
     private static final String DATA_FILE_NAME = "products.dat";
-    private long sequence = 0L;   
+    private long sequence = 0L; 
+
+    public FileProductRepository() {
+        loadDataFromFile();       // 시작 시 파일에서 읽어오기
+    }
+
+    // 2025.08.23 17:12 JHE 추가 
+    @Override
+    public boolean hasStock(String productId, int qty) {
+        Product p = productStore.get(productId);
+        return p != null && qty > 0 && p.getStock() >= qty;
+    }
+
+    @Override
+    public void decreaseStock(String productId, int qty) {
+        Product p = productStore.get(productId);
+        if (p == null) throw new IllegalArgumentException("상품 없음: " + productId);
+        if (qty <= 0 || p.getStock() < qty)
+            throw new IllegalArgumentException("재고 부족(요청 " + qty + ", 보유 " + (p.getStock()) + ")");
+        p.setStock(p.getStock() - qty);
+        saveDataToFile();
+    }
+
+    @Override
+    public void increaseStock(String productId, int qty) {
+        Product p = productStore.get(productId);
+        if (p == null) throw new IllegalArgumentException("상품 없음: " + productId);
+        if (qty <= 0) throw new IllegalArgumentException("증가 수량은 0보다 커야 함");
+        p.setStock(p.getStock() + qty);
+        saveDataToFile();
+    }
+
 
     private void loadDataFromFile() {
         List<Product> products = FileManager.readFromFile(DATA_FILE_NAME);
