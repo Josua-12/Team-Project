@@ -29,7 +29,16 @@ public class Product implements Serializable {
         this.salesCount = 0;
     }
 
-    // Getters and Setters
+    public Product(String name, ProductCategory category, int price, int stock, String description) {
+		super();
+		this.name = name;
+		this.category = category;
+		this.price = price;
+		this.stock = stock;
+		this.description = description;
+	}
+
+	// Getters and Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     public String getName() { return name; }
