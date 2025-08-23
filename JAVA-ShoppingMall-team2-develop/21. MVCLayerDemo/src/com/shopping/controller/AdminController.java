@@ -378,8 +378,6 @@ public class AdminController {
 	 private void addNewProduct() {
 	        try {
 	            System.out.println("\n== 신규 상품 등록 ==");
-	            System.out.print("상품 ID: ");
-	            String id = scanner.nextLine();
 	            System.out.print("상품명: ");
 	            String name = scanner.nextLine();
 	            System.out.print("가격: ");
@@ -392,7 +390,7 @@ public class AdminController {
 				System.out.print("상품 설명: ");
 				String description = scanner.nextLine();
 
-				Product newProduct = new Product(id, name, category, price, stock, description);
+				Product newProduct = new Product(name, category, price, stock, description);
 		        productService.addProduct(newProduct);
 		        System.out.println("상품이 성공적으로 등록되었습니다. (ID: " + newProduct.getId() + ")");
 

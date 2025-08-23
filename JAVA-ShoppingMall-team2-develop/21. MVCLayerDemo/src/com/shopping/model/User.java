@@ -12,7 +12,6 @@ public class User implements Serializable {
     protected String email;
     protected String name;
     protected Role role;
-
     private int balance; // 사용자 잔액은 일반 User에게만 의미가 있을 수 있습니다.
 
     public User() {
