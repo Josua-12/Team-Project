@@ -9,6 +9,10 @@ import com.shopping.model.Product;
  * CRUD + 다양한 조회 조건 제공
  */
 public interface ProductRepository {
+	
+    boolean hasStock(String productId, int qty);
+    void decreaseStock(String productId, int qty);
+    void increaseStock(String productId, int qty);
 
     Product save(Product product); // 상품 저장 (신규 또는 수정)
 

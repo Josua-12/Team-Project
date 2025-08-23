@@ -69,21 +69,46 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+//        // 영속성 계층 구현 인스턴스 생성
+//        FileUserRepository userRepo = new FileUserRepository();
+//        FileAdminRepository adminRepo = new FileAdminRepository();
+//        FileCartRepository cartRepo = new FileCartRepository();
+//        FileOrderRepository fileOrderRepo = (FileOrderRepository) orderRepo;
+//        FileProductRepository fileProductRepo = (FileProductRepository) productRepo;
+//        OrderRepository orderRepo = new DefaultFileOrderRepository("data/orders.dat");
+//        ProductRepository productRepo = new FileProductRepository();
+//
+//        
+//        // 서비스 계층 생성
+//        AuthService authService = new AuthService(userRepo, adminRepo);
+//        UserService userService = new UserService(userRepo);
+//        ProductService productService = new ProductService(fileProductRepo);
+//        OrderService orderService = new OrderService(orderRepo, productRepo, fileOrderRepo);
+//        AdminService adminService = new AdminService(userRepo);
+//        ReportService reportService = new ReportService(orderRepo);
+        
         // 영속성 계층 구현 인스턴스 생성
-        FileUserRepository userRepo = new FileUserRepository();
+        FileUserRepository userRepo   = new FileUserRepository();
         FileAdminRepository adminRepo = new FileAdminRepository();
-        FileCartRepository cartRepo = new FileCartRepository();
-        OrderRepository orderRepo = new DefaultFileOrderRepository("data/orders.dat");
-        ProductRepository productRepo = new FileProductRepository();
-        FileOrderRepository fileOrderRepo = (FileOrderRepository) orderRepo;
+        FileCartRepository cartRepo   = new FileCartRepository();
+
+        // 주문 저장소: 구현체를 하나만 만들고, 두 인터페이스로 업캐스트해서 재사용
+        DefaultFileOrderRepository orderRepoImpl = new DefaultFileOrderRepository("data/orders.dat");
+        OrderRepository orderRepo               = orderRepoImpl;       // upcast
+        FileOrderRepository fileOrderRepo       = orderRepoImpl;       // upcast
+
+        // 상품 저장소
+        FileProductRepository fileProductRepo = new FileProductRepository(); // 생성자 인자 없을 때
+        ProductRepository productRepo         = fileProductRepo;             // upcast
 
         // 서비스 계층 생성
-        AuthService authService = new AuthService(userRepo, adminRepo);
-        UserService userService = new UserService(userRepo);
-        ProductService productService = new ProductService(productRepository);
-        OrderService orderService = new OrderService(orderRepo, productRepo, fileOrderRepo);
-        AdminService adminService = new AdminService(userRepo);
-        ReportService reportService = new ReportService(orderRepo);
+        AuthService authService       = new AuthService(userRepo, adminRepo);
+        UserService userService       = new UserService(userRepo);
+        ProductService productService = new ProductService(productRepo);
+        OrderService orderService     = new OrderService(orderRepo, productRepo, fileOrderRepo, productService);
+        AdminService adminService     = new AdminService(userRepo);
+        ReportService reportService   = new ReportService(orderRepo);
+        
 
         // 세션 생성 (로그인 상태 공유)
         Session session = new Session();

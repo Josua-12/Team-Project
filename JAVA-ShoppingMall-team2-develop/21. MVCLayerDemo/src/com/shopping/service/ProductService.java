@@ -1,10 +1,11 @@
 package com.shopping.service;
 
-import com.shopping.model.Product;
-import com.shopping.model.ProductCategory;
-import com.shopping.repository.FileProductRepository;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import com.shopping.model.Product;
+import com.shopping.repository.ProductRepository;
 
 /**
  * 상품 관련 비즈니스 로직을 처리하고 데이터 유효성을 검증하는 서비스 클래스.
@@ -12,10 +13,16 @@ import java.util.Optional;
  */
 public class ProductService {
 
-    private final FileProductRepository productRepository;
-
-    public ProductService(FileProductRepository productRepository) {
-        this.productRepository = productRepository;
+//    private final FileProductRepository fileOroductRepository;
+    private final ProductRepository productRepository;
+    
+    //2025.08.23 16:54 JHE 수정
+//    public ProductService(FileProductRepository fileOroductRepository) {
+//        this.fileOroductRepository = fileOroductRepository;
+//    }
+    
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = Objects.requireNonNull(productRepository);
     }
 
     /**

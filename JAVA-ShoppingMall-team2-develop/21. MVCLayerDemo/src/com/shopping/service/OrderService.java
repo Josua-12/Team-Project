@@ -1,14 +1,18 @@
 package com.shopping.service;
 
-import com.shopping.Auth.Session;
-import com.shopping.model.*;
-import com.shopping.repository.FileOrderRepository;
-import com.shopping.repository.OrderRepository;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import com.shopping.Auth.Session;
+import com.shopping.model.Order;
+import com.shopping.model.OrderItem;
+import com.shopping.model.OrderStatus;
+import com.shopping.model.Role;
+import com.shopping.repository.FileOrderRepository;
+import com.shopping.repository.OrderRepository;
+import com.shopping.repository.ProductRepository;
 
 /**
  * OrderService
@@ -34,21 +38,18 @@ import java.util.Optional;
 public class OrderService {
 
     private final OrderRepository orderRepo;
-    private final ProductRepository productRepo;
-    private final FileOrderRepository orderRepository;
-    private OrderService orderService;
+    private final ProductRepository productRepo;          // ← com.shopping.repository.ProductRepository
+    private final FileOrderRepository fileOrderRepository;
+    private final ProductService productService;
 
-
-
-//    public OrderService(OrderRepository orderRepo, ProductRepository productRepo) {
-//        this.orderRepo = Objects.requireNonNull(orderRepo);
-//        this.productRepo = Objects.requireNonNull(productRepo);
-//    }
-    
-    public OrderService(OrderRepository orderRepo, ProductRepository productRepo, FileOrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepo,
+                        ProductRepository productRepo,
+                        FileOrderRepository fileOrderRepository, 
+                        ProductService productService) {
         this.orderRepo = orderRepo;
         this.productRepo = productRepo;
-        this.orderRepository = orderRepository;
+        this.fileOrderRepository = fileOrderRepository;
+        this.productService = productService;
     }
 
     // =========================
@@ -101,21 +102,21 @@ public class OrderService {
     
     public List<Order> getOrdersByUserId(String userId) {
         // repository의 인스턴스 메서드 호출
-        return orderRepository.findByUserId(userId);
+        return fileOrderRepository.findByUserId(userId);
     }
     
     public List<Order> getAllOrders() {
-        return orderRepository.findAll(); // repository의 인스턴스 메서드 호출
+        return fileOrderRepository.findAll(); // repository의 인스턴스 메서드 호출
     }
     
     // 주문 상태 업데이트
     public boolean updateOrderStatus(String orderId, OrderStatus newStatus) {
-        return orderRepository.updateStatus(orderId, newStatus);
+        return fileOrderRepository.updateStatus(orderId, newStatus);
     }
 
     //주문 단건 조회 (Read by OrderID)
     public synchronized Optional<Order> findByOrderId(String orderId) {
-        return orderRepository.findById(orderId);
+        return fileOrderRepository.findById(orderId);
     }
 
     // =========================
@@ -242,9 +243,9 @@ public class OrderService {
     // =========================
     // 최소 ProductRepository 인터페이스
     // =========================
-    public interface ProductRepository {
-        boolean hasStock(String productId, int qty);
-        void decreaseStock(String productId, int qty);
-        void increaseStock(String productId, int qty);
-    }
+//    public interface ProductRepository {
+//        boolean hasStock(String productId, int qty);
+//        void decreaseStock(String productId, int qty);
+//        void increaseStock(String productId, int qty);
+//    }
 }
