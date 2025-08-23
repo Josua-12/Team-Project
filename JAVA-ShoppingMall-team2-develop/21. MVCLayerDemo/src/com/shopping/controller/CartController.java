@@ -1,17 +1,17 @@
 package com.shopping.controller;
 
+import java.util.Optional;
+import java.util.Scanner;
+
 import com.shopping.model.Cart;
 import com.shopping.model.Product;
 import com.shopping.repository.CartRepository; // import는 그대로 유지
 import com.shopping.repository.ProductRepository;
 
-import java.util.Optional;
-import java.util.Scanner;
-
 public class CartController {
 
     /**
-	 * 
+	 *
 	 */
 	private final CartRepository cartRepository; // 저장소 객체
     private final ProductRepository productRepository;
@@ -45,14 +45,14 @@ public class CartController {
                 case 1:
                 	System.out.print("추가할 상품 ID를 입력하세요 (예: prod-001): ");
                     String productId = scanner.nextLine();
-                    
+
                     // 1. ProductRepository를 사용해 ID로 상품을 찾는다.
                     Optional<Product> productOptional = productRepository.findById(productId);
 
                     // 2. 상품이 존재하는지 확인한다.
                     if (productOptional.isPresent()) {
                         Product product = productOptional.get(); // Optional에서 실제 Product 객체를 꺼냄
-                        
+
                         System.out.print("수량을 입력하세요: ");
                         int quantity = scanner.nextInt();
                         scanner.nextLine(); // 버퍼 비우기
@@ -84,27 +84,27 @@ public class CartController {
             }
         }
     }
-    
-    
+
+
     private void addProductToCart(String userId, Product product, int quantity) {
         Cart cart = cartRepository.findByUserId(userId)
                                   .orElseGet(() -> new Cart(userId));
-        
+
         cart.addProduct(product, quantity);
         cartRepository.save(cart);
         System.out.printf("✅ '%s' 상품 %d개를 장바구니에 추가했습니다.\n", product.getName(), quantity);
     }
-    
+
     private void viewCart(String userId) {
         Optional<Cart> cartOptional = cartRepository.findByUserId(userId);
-        
+
         if (cartOptional.isPresent() && !cartOptional.get().getItems().isEmpty()) {
             System.out.println(cartOptional.get());
         } else {
             System.out.println("🛒 장바구니가 비어있습니다.");
         }
     }
-    
+
     private void removeProductFromCart(String userId, String productId) {
         Optional<Cart> cartOptional = cartRepository.findByUserId(userId);
 
@@ -121,7 +121,7 @@ public class CartController {
             System.out.println("🛒 장바구니가 비어있습니다.");
         }
     }
-    
+
     private void clearCart(String userId) {
         Optional<Cart> cartOptional = cartRepository.findByUserId(userId);
 

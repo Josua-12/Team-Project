@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.shopping.model.Product;
+import com.shopping.persistence.FileManager;
+
 /**
  * 상품 데이터의 영속성을 관리하는 저장소 클래스.
  * FileManager를 사용하여 파일에서 데이터를 읽고 쓰는 역할을 담당합니다.
@@ -24,7 +27,7 @@ public class FileProductRepository implements ProductRepository {
 	// 2025.08.23 17:12 JHE 수정
 	private final Map<String, Product> productStore = new HashMap<>();
     private static final String DATA_FILE_NAME = "products.dat";
-    private long sequence = 0L; 
+    private long sequence = 0L;
 
     public FileProductRepository() {
         loadDataFromFile();       // 시작 시 파일에서 읽어오기
@@ -96,9 +99,12 @@ public class FileProductRepository implements ProductRepository {
     @Override
     public void decreaseStock(String productId, int qty) {
         Product p = productStore.get(productId);
-        if (p == null) throw new IllegalArgumentException("상품 없음: " + productId);
-        if (qty <= 0 || p.getStock() < qty)
-            throw new IllegalArgumentException("재고 부족(요청 " + qty + ", 보유 " + (p.getStock()) + ")");
+        if (p == null) {
+			throw new IllegalArgumentException("상품 없음: " + productId);
+		}
+        if (qty <= 0 || p.getStock() < qty) {
+			throw new IllegalArgumentException("재고 부족(요청 " + qty + ", 보유 " + (p.getStock()) + ")");
+		}
         p.setStock(p.getStock() - qty);
         saveDataToFile();
     }
@@ -106,8 +112,12 @@ public class FileProductRepository implements ProductRepository {
     @Override
     public void increaseStock(String productId, int qty) {
         Product p = productStore.get(productId);
-        if (p == null) throw new IllegalArgumentException("상품 없음: " + productId);
-        if (qty <= 0) throw new IllegalArgumentException("증가 수량은 0보다 커야 함");
+        if (p == null) {
+			throw new IllegalArgumentException("상품 없음: " + productId);
+		}
+        if (qty <= 0) {
+			throw new IllegalArgumentException("증가 수량은 0보다 커야 함");
+		}
         p.setStock(p.getStock() + qty);
         saveDataToFile();
     }
@@ -159,7 +169,9 @@ public class FileProductRepository implements ProductRepository {
 
     @Override
     public void saveAll(Product product) {
-        if (product == null) return;
+        if (product == null) {
+			return;
+		}
         save(product);
     }
 

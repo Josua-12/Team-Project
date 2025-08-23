@@ -2,7 +2,10 @@ package com.shopping.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -16,7 +19,7 @@ public class Order implements Serializable {
     private OrderStatus status;
 
     // 2-1. 생성자
-    public Order() {							// 기본 생성자 → "장바구니에서 주문을 시작" (아직 번호 없음, 기본값 세팅). 객체를 만들자마자 필드를 원하는 값으로 초기화. 
+    public Order() {							// 기본 생성자 → "장바구니에서 주문을 시작" (아직 번호 없음, 기본값 세팅). 객체를 만들자마자 필드를 원하는 값으로 초기화.
         this.items = new ArrayList<>();			// items를 빈 ArrayList로 만들고,
         this.orderDate = LocalDateTime.now();   // orderDate를 현재 시간으로,
         this.status = OrderStatus.PENDING;     // status를 OrderStatus.PENDING으로 세팅.
@@ -28,7 +31,9 @@ public class Order implements Serializable {
                  LocalDateTime orderDate, OrderStatus status) {                 // 파라미터 생성자 → "이미 확정된 주문을 재구성" (DB에서 꺼내거나 API 응답으로 받아옴).
     	// orderId는 null/blank 허용 → 저장 시 repo가 nextId()로 부여
     	//if (orderId == null || orderId.isBlank()) throw new IllegalArgumentException("orderId empty");    //null 값이나 빈 값 방어 로직 포함 → 잘못된 데이터 방지
-        if (userId == null || userId.isBlank())   throw new IllegalArgumentException("userId empty");
+        if (userId == null || userId.isBlank()) {
+			throw new IllegalArgumentException("userId empty");
+		}
         //this.orderId = orderId;
         this.orderId = (orderId != null && !orderId.isBlank()) ? orderId : null;
         this.userId = userId;
@@ -50,7 +55,9 @@ public class Order implements Serializable {
     /** 합계 재계산: 아이템 전수 합 */
     private void recalcTotal() {
         int sum = 0;
-        for (OrderItem i : items) sum += i.getLineTotal();
+        for (OrderItem i : items) {
+			sum += i.getLineTotal();
+		}
         this.totalPrice = sum;
     }
 
@@ -58,7 +65,9 @@ public class Order implements Serializable {
     /** 같은 productId는 합산해서 추가 */
     public void addItem(OrderItem item) {
         requireModifiable();
-        if (item == null) return;
+        if (item == null) {
+			return;
+		}
 
         for (OrderItem it : items) {
             if (Objects.equals(it.getProductId(), item.getProductId())) {
@@ -75,7 +84,9 @@ public class Order implements Serializable {
     public boolean removeItemByProductId(String productId) {
         requireModifiable();
         boolean removed = this.items.removeIf(i -> Objects.equals(i.getProductId(), productId));
-        if (removed) recalcTotal();
+        if (removed) {
+			recalcTotal();
+		}
         return removed;    // 제거 성공 여부(true/false)를 반환
     }
 
@@ -103,7 +114,7 @@ public class Order implements Serializable {
 //        }
 //        this.status = next;
 //    }
-    
+
     /**
      * 상태 전이
      * - 전이 가능 여부는 OrderStatus.canTransitionTo(next)가 판단 (전이 테이블/정책 반영)
@@ -111,7 +122,9 @@ public class Order implements Serializable {
      * - 허용되지 않는 전이는 명확한 메시지로 예외를 던짐
      */
     public void changeStatus(OrderStatus next) {
-        if (next == null) throw new IllegalArgumentException("status null");
+        if (next == null) {
+			throw new IllegalArgumentException("status null");
+		}
 
         // 멱등 전이 처리: 정책상 허용이면 no-op
         if (this.status == next) {
@@ -143,11 +156,13 @@ public class Order implements Serializable {
     public String getUserId() { return userId; }
     //public void setUserId(String userId) { this.userId = userId; }
     public void setUserId(String userId) {
-    	if (userId == null || userId.isBlank()) throw new IllegalArgumentException("userId empty");
+    	if (userId == null || userId.isBlank()) {
+			throw new IllegalArgumentException("userId empty");
+		}
     	this.userId = userId;
     	}
-    
-    
+
+
     public List<OrderItem> getItems() { return Collections.unmodifiableList(items); }
     public void setItems(List<OrderItem> items) {
         this.items = new ArrayList<>(items != null ? items : new ArrayList<>());
@@ -163,12 +178,16 @@ public class Order implements Serializable {
     // 5. equals & hashCode : orderId 기준 (null 안전)
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Order)) return false;
+        if (this == o) {
+			return true;
+		}
+        if (!(o instanceof Order)) {
+			return false;
+		}
         Order order = (Order) o;
         return Objects.equals(orderId, order.orderId);
     }
-    @Override 
+    @Override
     public int hashCode() { return Objects.hash(orderId); }
 
     // 6. toString

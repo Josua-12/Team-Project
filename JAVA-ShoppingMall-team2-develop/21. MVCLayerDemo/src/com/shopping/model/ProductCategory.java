@@ -11,7 +11,7 @@ public enum ProductCategory {
     CLOTHING,    // 의류
     FOOD,        // 식품
     BOOKS,       // 도서
-    OTHER; 
+    OTHER;
 
     /**
      * 문자열로부터 해당하는 Enum 상수를 찾아 반환합니다.

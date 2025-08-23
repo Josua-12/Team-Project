@@ -1,18 +1,21 @@
 package com.shopping.test;
 
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.function.Executable;
-import org.mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-import java.util.*;
 import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.shopping.Auth.Session;
 import com.shopping.model.Order;
@@ -21,6 +24,7 @@ import com.shopping.model.OrderStatus;
 import com.shopping.model.Role;
 import com.shopping.repository.FileOrderRepository;
 import com.shopping.repository.OrderRepository;
+import com.shopping.service.OrderService;
 
 
 
@@ -70,7 +74,9 @@ class OrderServiceTest {
         Order o = new Order();           // 기본 PENDING
         o.setOrderId(id);
         o.setUserId(userId);
-        for (OrderItem it : items) o.addItem(it);
+        for (OrderItem it : items) {
+			o.addItem(it);
+		}
         return o;
     }
 

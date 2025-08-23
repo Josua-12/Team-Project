@@ -1,6 +1,8 @@
 package com.shopping.test.Order;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -112,7 +114,9 @@ class OrderStatusTest {
         @Override public String toString() { return from + " -> " + to; }
         // EnumSet에서 쓰기 위한 equality/hashCode (간단 구현)
         @Override public boolean equals(Object o) {
-            if (!(o instanceof Transition)) return false;
+            if (!(o instanceof Transition)) {
+				return false;
+			}
             Transition other = (Transition) o;
             return from == other.from && to == other.to;
         }

@@ -1,29 +1,27 @@
 package com.shopping.test.Order;
 
-import com.shopping.Auth.Session;
-import com.shopping.controller.OrderController;
-import com.shopping.model.Order;
-import com.shopping.model.OrderItem;
-import com.shopping.model.OrderStatus;
-import com.shopping.model.Role;
-import com.shopping.model.User;
-import com.shopping.service.OrderService;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.*;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Scanner;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.*;
+import com.shopping.Auth.Session;
+import com.shopping.controller.OrderController;
+import com.shopping.model.Order;
+import com.shopping.model.Role;
+import com.shopping.model.User;
+import com.shopping.service.OrderService;
 
 /**
  * OrderController 메뉴/명령 → 서비스 라우팅 & 세션전달 & 유효성/예외 처리 테스트

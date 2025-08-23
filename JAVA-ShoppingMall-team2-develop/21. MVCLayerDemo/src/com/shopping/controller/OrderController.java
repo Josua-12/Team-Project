@@ -1,11 +1,11 @@
 package com.shopping.controller;
 
-import com.shopping.Auth.Session;
-import com.shopping.model.*;
-import com.shopping.service.OrderService;
-
 import java.util.List;
 import java.util.Scanner;
+
+import com.shopping.Auth.Session;
+import com.shopping.model.Order;
+import com.shopping.service.OrderService;
 
 public class OrderController {
 
@@ -28,7 +28,9 @@ public class OrderController {
         System.out.println("4. 주문 확인 및 최종 결재");
 
         if (!sc.hasNextInt()) {
-            if (sc.hasNext()) sc.next(); // 잘못된 토큰 소비
+            if (sc.hasNext()) {
+				sc.next(); // 잘못된 토큰 소비
+			}
             System.out.println("숫자를 입력해 주세요.");
             return; // 서비스 호출 없이 종료
         }
@@ -52,7 +54,9 @@ public class OrderController {
         System.out.println("3. 주문 취소 (PENDING 상태만)");
 
         if (!sc.hasNextInt()) {
-            if (sc.hasNext()) sc.next(); // 잘못된 토큰 소비
+            if (sc.hasNext()) {
+				sc.next(); // 잘못된 토큰 소비
+			}
             System.out.println("숫자를 입력해 주세요.");
             return; // 서비스 호출 없이 종료
         }

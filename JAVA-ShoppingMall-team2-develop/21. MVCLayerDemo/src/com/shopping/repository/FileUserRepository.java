@@ -1,14 +1,14 @@
 package com.shopping.repository;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.shopping.model.User;
 import com.shopping.persistence.FileManager;
 import com.shopping.util.Constants;
 
 public class FileUserRepository implements UserRepository {
-    
+
     private static final String FILE_NAME = Constants.USER_DATA_FILE;
 
     @Override
@@ -49,7 +49,7 @@ public class FileUserRepository implements UserRepository {
 
     @Override
     public boolean existsById(String id) {
-    	
+
         return findById(id) != null;
     }
 
@@ -71,21 +71,21 @@ public class FileUserRepository implements UserRepository {
 
     @Override
     public User findByEmail(String email) {
-        return (User) FileManager.readFromFile(FILE_NAME).stream()
+        return FileManager.readFromFile(FILE_NAME).stream()
         		.filter(obj -> obj instanceof User)   // User인 것만
                 .map(obj -> (User) obj)               // 캐스팅
                 .filter(u -> u.getEmail().equals(email))
                 .findFirst()
                 .orElse(null);
     }
-    
+
     // 이름 일부 포함 검색 (부분 일치)
     @Override
     public List<User> findByNameContaining(String keyword) {
         List<User> users = FileManager.readFromFile(FILE_NAME);
         return users.stream()
                 .filter(obj -> obj instanceof User)
-                .map(obj -> (User) obj)
+                .map(obj -> obj)
                 .filter(u -> u.getName() != null && u.getName().contains(keyword))
                 .toList();
     }

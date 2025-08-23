@@ -9,7 +9,7 @@ import com.shopping.model.User;
 
 public class UserTest {
 
-	
+
 	@Test
 	void testDeductBalance_ThrowsWhenInsufficient() {
 	    User user = new User("id", "pw", "email", "name");

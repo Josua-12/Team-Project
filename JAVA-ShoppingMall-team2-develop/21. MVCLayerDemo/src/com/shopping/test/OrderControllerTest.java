@@ -1,27 +1,26 @@
 package com.shopping.test;
 
-import com.shopping.Auth.Session;
-import com.shopping.model.Order;
-import com.shopping.model.Role;
-import com.shopping.service.OrderService;
-import com.shopping.controller.*;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.shopping.Auth.Session;
+import com.shopping.controller.OrderController;
+import com.shopping.model.Order;
+import com.shopping.model.Role;
+import com.shopping.service.OrderService;
 
 /**
  * OrderController 메뉴 흐름 테스트 (실코드 시그니처에 맞춤)

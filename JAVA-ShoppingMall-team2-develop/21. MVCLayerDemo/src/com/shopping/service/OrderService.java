@@ -40,16 +40,17 @@ public class OrderService {
     private final OrderRepository orderRepo;
     private final ProductRepository productRepo;          // ← com.shopping.repository.ProductRepository
     private final FileOrderRepository fileOrderRepository;
-    private final ProductService productService;
+//    private final ProductService productService;
 
     public OrderService(OrderRepository orderRepo,
                         ProductRepository productRepo,
-                        FileOrderRepository fileOrderRepository, 
-                        ProductService productService) {
+                        FileOrderRepository fileOrderRepository)
+//                        ProductService productService)
+                        {
         this.orderRepo = orderRepo;
         this.productRepo = productRepo;
         this.fileOrderRepository = fileOrderRepository;
-        this.productService = productService;
+//        this.productService = productService;
     }
 
     // =========================
@@ -99,16 +100,16 @@ public class OrderService {
                 .filter(o -> Objects.equals(o.getUserId(), actorUserId))
                 .toList();
     }
-    
+
     public List<Order> getOrdersByUserId(String userId) {
         // repository의 인스턴스 메서드 호출
         return fileOrderRepository.findByUserId(userId);
     }
-    
+
     public List<Order> getAllOrders() {
         return fileOrderRepository.findAll(); // repository의 인스턴스 메서드 호출
     }
-    
+
     // 주문 상태 업데이트
     public boolean updateOrderStatus(String orderId, OrderStatus newStatus) {
         return fileOrderRepository.updateStatus(orderId, newStatus);
@@ -220,7 +221,9 @@ public class OrderService {
     // 헬퍼
     // =========================
     private void authorizeOwnership(Order order, String actorUserId, Role role) {
-        if (role == Role.ADMIN) return;
+        if (role == Role.ADMIN) {
+			return;
+		}
         if (!Objects.equals(order.getUserId(), actorUserId)) {
             throw new SecurityException("본인 주문만 접근할 수 있습니다.");
         }
@@ -233,11 +236,15 @@ public class OrderService {
     }
 
     private static void requireNonBlank(String s, String field) {
-        if (s == null || s.isBlank()) throw new IllegalArgumentException(field + " is blank");
+        if (s == null || s.isBlank()) {
+			throw new IllegalArgumentException(field + " is blank");
+		}
     }
 
     private static <T> void requireNotEmpty(List<T> list, String field) {
-        if (list == null || list.isEmpty()) throw new IllegalArgumentException(field + " is empty");
+        if (list == null || list.isEmpty()) {
+			throw new IllegalArgumentException(field + " is empty");
+		}
     }
 
     // =========================

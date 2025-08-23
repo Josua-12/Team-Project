@@ -2,6 +2,7 @@ package com.shopping.repository;
 
 import java.util.List;
 import java.util.Optional;
+
 import com.shopping.model.Product;
 
 /**
@@ -9,10 +10,8 @@ import com.shopping.model.Product;
  * CRUD + 다양한 조회 조건 제공
  */
 public interface ProductRepository {
-	
-    boolean hasStock(String productId, int qty);
-    void decreaseStock(String productId, int qty);
-    void increaseStock(String productId, int qty);
+
+   
 
     Product save(Product product); // 상품 저장 (신규 또는 수정)
 
@@ -30,7 +29,7 @@ public interface ProductRepository {
 
     // [추가] ProductService에서 사용하는 새로운 기능 명세
     List<Product> findAll(int page, int pageSize); // 페이징 처리된 모든 상품 조회
-    
+
     long countAll(); // 전체 상품 개수 조회
 
     List<Product> findBestSellers(int limit); // 베스트셀러 상품 조회
@@ -38,4 +37,8 @@ public interface ProductRepository {
     List<Product> findNewArrivals(int limit); // 신상품 조회
 
     List<Product> findByPriceRange(int minPrice, int maxPrice); // 가격대별 상품 조회
+    
+    boolean hasStock(String productId, int qty);
+    void decreaseStock(String productId, int qty);
+    void increaseStock(String productId, int qty);
 }

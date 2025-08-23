@@ -105,7 +105,7 @@ public class Main {
         AuthService authService       = new AuthService(userRepo, adminRepo);
         UserService userService       = new UserService(userRepo);
         ProductService productService = new ProductService(productRepo);
-        OrderService orderService     = new OrderService(orderRepo, productRepo, fileOrderRepo, productService);
+        OrderService orderService     = new OrderService(orderRepo, productRepo, fileOrderRepo);
         AdminService adminService     = new AdminService(userRepo);
         ReportService reportService   = new ReportService(orderRepo);
         

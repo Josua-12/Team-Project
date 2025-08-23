@@ -15,12 +15,12 @@ public class ProductService {
 
 //    private final FileProductRepository fileOroductRepository;
     private final ProductRepository productRepository;
-    
+
     //2025.08.23 16:54 JHE 수정
 //    public ProductService(FileProductRepository fileOroductRepository) {
 //        this.fileOroductRepository = fileOroductRepository;
 //    }
-    
+
     public ProductService(ProductRepository productRepository) {
         this.productRepository = Objects.requireNonNull(productRepository);
     }
@@ -47,7 +47,7 @@ public class ProductService {
         validateProductData(product);
         return productRepository.save(product);
     }
-    
+
     /**
      * 특정 상품을 삭제합니다.
      * @param id 삭제할 상품의 ID
@@ -68,7 +68,7 @@ public class ProductService {
         }
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("오류: ID " + id + "에 해당하는 상품을 찾을 수 없습니다."));
-        
+
         int newStock = product.getStock() + quantity;
         if (newStock > 9999) {
             throw new IllegalArgumentException("오류: 재고는 9999개를 초과할 수 없습니다.");
@@ -86,7 +86,7 @@ public class ProductService {
     public List<Product> getAllProducts(int page, int pageSize) {
         return productRepository.findAll(page, pageSize);
     }
-    
+
     /**
      * 전체 상품의 개수를 반환합니다.
      * @return 전체 상품 개수
@@ -112,7 +112,7 @@ public class ProductService {
     public List<Product> getNewArrivals(int limit) {
         return productRepository.findNewArrivals(limit);
     }
-    
+
     /**
      * 특정 카테고리에 해당하는 상품 목록을 반환합니다.
      * @param category 조회할 카테고리명
@@ -121,7 +121,7 @@ public class ProductService {
     public List<Product> findProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }
-    
+
     /**
      * 지정된 가격 범위 내의 상품 목록을 반환합니다.
      * @param min 최소 가격

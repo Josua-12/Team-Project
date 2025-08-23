@@ -1,8 +1,8 @@
 package com.shopping.service;
 
 import com.shopping.model.Admin;
-import com.shopping.model.User;
 import com.shopping.model.Role;
+import com.shopping.model.User;
 import com.shopping.repository.AdminRepository;
 import com.shopping.repository.UserRepository;
 import com.shopping.util.PasswordEncoder;
@@ -15,9 +15,9 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final AdminRepository adminRepository;
-    
+
     private Object loggedInUser; // 현재 로그인한 객체
-    
+
     public Object getLoggedInUser() {
         return loggedInUser;
     }

@@ -22,18 +22,18 @@ public class AdminController {
 	private ProductService productService;
 	private Scanner scanner;
     private ReportService reportService;
-	
+
     public AdminController(UserService userService, OrderService orderService, ProductService productService, ReportService reportService) {
         this.userService = userService;
         this.orderService = orderService;
         this.productService = productService;
         this.reportService = reportService; // 전달받은 ReportService 사용
         this.scanner = new Scanner(System.in);
-		
+
 	}
-	
-	
-	
+
+
+
 	// 관리자 기능 메뉴 표시 및 처리
 	public void showAdminMenu() {
 		while(true) {
@@ -43,9 +43,9 @@ public class AdminController {
 			System.out.println("3. 주문 관리");
 			System.out.println("0. 돌아가기");
 			System.out.print("선택: ");
-			
+
 			String choice = scanner.nextLine();
-			
+
 			// 사용자 선택에 따른 메소드 호출
 			switch(choice) {
 			case "1":
@@ -75,9 +75,9 @@ public class AdminController {
 			System.out.println("3. 주문 통계 조회 (일별, 상품별)");
 			System.out.println("0. 돌아가기");
 			System.out.print("선택: ");
-			
+
 			String choice = scanner.nextLine();
-			
+
 			// 사용자 선택에 따른 메소드 호출
 			switch(choice) {
 			case "1":
@@ -95,9 +95,9 @@ public class AdminController {
 				System.out.println("잘못된 선택입니다.");
 			}
 		}
-		
+
 	}
-	
+
 	 private void displayAllOrders() {
 	        System.out.println("\n== 전체 주문 목록 ==");
 	        List<Order> orders = orderService.getAllOrders();
@@ -107,7 +107,7 @@ public class AdminController {
 	        }
 	        orders.forEach(System.out::println);
 	    }
-	 
+
 	 private void updateOrderStatus() {
 	        System.out.println("\n== 주문 상태 변경 ==");
 	        System.out.print("상태를 변경할 주문의 ID를 입력하세요: ");
@@ -142,10 +142,10 @@ public class AdminController {
 	            System.out.println("상태 변경 오류: " + e.getMessage());
 	        }
 	    }
-	 
+
 	 private void displayOrderStatistics() {
 		    System.out.println("\n== 주문 통계 조회 ==");
-		    
+
 		    // 1. 일별 매출 통계 (ReportService 사용)
 		    System.out.println("\n--- 일별 총 매출 ---");
 		    System.out.print("매출 조회를 시작할 날짜(YYYY-MM-DD)를 입력하세요 (전체 기간은 Enter): ");
@@ -169,7 +169,7 @@ public class AdminController {
 		    System.out.println("\n--- 상위 판매 상품 (판매량 기준) ---");
 		    System.out.print("조회할 상위 상품 개수를 입력하세요: ");
 		    int topN = Integer.parseInt(scanner.nextLine());
-		    
+
 		    Map<String, Integer> topProducts = reportService.topProducts(topN);
 		    if (topProducts.isEmpty()) {
 		        System.out.println("판매된 상품이 없습니다.");
@@ -185,11 +185,11 @@ public class AdminController {
 		    // 3. 주문 상태별 통계 (ReportService 사용)
 		    System.out.println("\n--- 주문 상태별 현황 ---");
 		    Map<OrderStatus, Long> statusCounts = reportService.orderCountByStatus();
-		    statusCounts.forEach((status, count) -> 
+		    statusCounts.forEach((status, count) ->
 		        System.out.printf("- %s: %d건\n", status.getDisplayName(), count)
 		    );
 		}
-	 
+
 
 
 
@@ -202,9 +202,9 @@ public class AdminController {
 			System.out.println("4. 회원 강제 탈퇴");
 			System.out.println("0. 돌아가기");
 			System.out.print("선택: ");
-			
+
 			String choice = scanner.nextLine();
-			
+
 			// 사용자 선택에 따른 메소드 호출
 			switch(choice) {
 			case "1":
@@ -225,10 +225,10 @@ public class AdminController {
 				System.out.println("잘못된 선택입니다.");
 			}
 		}
-		
+
 	}
 
-	
+
 	private void deactivateUser() {
         System.out.println("\n== 회원 강제 탈퇴 ==");
         System.out.print("탈퇴시킬 회원의 ID를 입력하세요: ");
@@ -249,9 +249,9 @@ public class AdminController {
 			System.out.println("3. 이메일로 회원 검색");
 			System.out.println("0. 돌아가기");
 			System.out.print("선택: ");
-			
+
 			String choice = scanner.nextLine();
-			
+
 			// 사용자 선택에 따른 메소드 호출
 			switch(choice) {
 			case "1":
@@ -269,7 +269,7 @@ public class AdminController {
 				System.out.println("잘못된 선택입니다.");
 			}
 		}
-		
+
 	}
 
 	private void searchUsersByName() {
@@ -293,7 +293,7 @@ public class AdminController {
         } else {
             System.out.println("해당 ID의 회원을 찾을 수 없습니다.");
         }
-		
+
 	}
 
 	 private void searchUsersByEmail() {
@@ -316,7 +316,7 @@ public class AdminController {
         }
         users.forEach(System.out::println);
 	}
-	
+
 	private void displayUserDetails() {
         System.out.println("\n== 회원 상세 정보 조회 ==");
         System.out.print("조회할 회원의 ID를 입력하세요: ");
@@ -348,9 +348,9 @@ public class AdminController {
 			System.out.println("5. 상품 목록 조회");
 			System.out.println("0. 돌아가기");
 			System.out.print("선택: ");
-			
+
 			String choice = scanner.nextLine();
-			
+
 			// 사용자 선택에 따른 메소드 호출
 			switch(choice) {
 			case "1":
@@ -373,7 +373,7 @@ public class AdminController {
 				System.out.println("잘못된 선택입니다.");
 			}
 		}
-		
+
 	}
 	 private void addNewProduct() {
 	        try {
@@ -418,15 +418,21 @@ public class AdminController {
 	        try {
 	            System.out.print("새 상품명 (변경 없으면 Enter): ");
 	            String name = scanner.nextLine();
-	            if (!name.isBlank()) product.setName(name);
+	            if (!name.isBlank()) {
+					product.setName(name);
+				}
 
 	            System.out.print("새 가격 (변경 없으면 Enter): ");
 	            String priceStr = scanner.nextLine();
-	            if (!priceStr.isBlank()) product.setPrice(Integer.parseInt(priceStr));
+	            if (!priceStr.isBlank()) {
+					product.setPrice(Integer.parseInt(priceStr));
+				}
 
 	            System.out.print("새 재고 (변경 없으면 Enter): ");
 	            String stockStr = scanner.nextLine();
-	            if (!stockStr.isBlank()) product.setStock(Integer.parseInt(stockStr));
+	            if (!stockStr.isBlank()) {
+					product.setStock(Integer.parseInt(stockStr));
+				}
 
 	            System.out.printf("새 카테고리 (현재: %s, 변경 없으면 Enter): ", product.getCategory().name());
 				String categoryStr = scanner.nextLine();
@@ -481,7 +487,7 @@ public class AdminController {
 	            System.out.println("재고 추가 중 오류 발생: " + e.getMessage());
 	        }
 	    }
-	    
+
 	    /** 상품 목록 출력 */
 	    public void listProducts() {
 	        System.out.println("\n--- 상품 목록 ---");

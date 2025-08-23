@@ -1,16 +1,7 @@
 package com.shopping.test;
 
-import com.shopping.Auth.Session;
-import com.shopping.model.Role;
-import com.shopping.service.OrderService;
-import com.shopping.controller.*;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Constructor;
@@ -18,9 +9,17 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.shopping.Auth.Session;
+import com.shopping.controller.MainController;
+import com.shopping.controller.OrderController;
+import com.shopping.model.Role;
+import com.shopping.service.OrderService;
 
 /**
  * MainController 메뉴 라우팅 테스트

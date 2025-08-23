@@ -1,6 +1,7 @@
 package com.shopping.repository;
 
 import java.util.List;
+
 import com.shopping.model.User;
 
 public interface UserRepository {

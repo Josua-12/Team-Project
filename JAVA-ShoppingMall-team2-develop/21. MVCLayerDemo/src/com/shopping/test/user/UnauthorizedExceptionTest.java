@@ -1,7 +1,8 @@
 package com.shopping.test.user;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class UnauthorizedExceptionTest {  // Test suffix 추천!
 

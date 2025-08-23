@@ -1,14 +1,28 @@
 package com.shopping.repository;
 
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.UncheckedIOException;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import com.shopping.model.Order;
 import com.shopping.model.OrderStatus;
-import com.shopping.repository.OrderRepository;
-
-import java.io.*;
-import java.nio.file.*;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * FileOrderRepository
@@ -18,7 +32,7 @@ import java.util.stream.Collectors;
  * - 애플리케이션이 꺼져도 주문 정보가 유지됨(영속성 보장)
  * - 내부적으로 Map<String, Order> 형태로 캐시를 두고 관리
  */
-public abstract class FileOrderRepository implements OrderRepository {
+public class FileOrderRepository implements OrderRepository {
 
     private final Path storePath;   // 실제 주문 데이터가 저장될 파일 경로 (예: data/orders.dat)
     private final Path tempPath;    // 임시 파일 경로 (쓰기 도중 실패 시 안전성 확보용)
@@ -45,7 +59,9 @@ public abstract class FileOrderRepository implements OrderRepository {
      */
     @Override
     public synchronized void save(Order order) {
-        if (order == null) throw new IllegalArgumentException("order is null");
+        if (order == null) {
+			throw new IllegalArgumentException("order is null");
+		}
 
         // ID 자동 발급
         if (order.getOrderId() == null || order.getOrderId().isBlank()) {
@@ -74,10 +90,14 @@ public abstract class FileOrderRepository implements OrderRepository {
     // 페이징 지원 버전 (현재는 주석 처리)
     // 인터페이스에 메서드가 없으면 @Override 제거 후 구현체 전용으로 둘 수 있음
    public synchronized List<Order> findAll(int page, int size) {
-       if (page < 0 || size <= 0) throw new IllegalArgumentException("invalid page/size");
+       if (page < 0 || size <= 0) {
+		throw new IllegalArgumentException("invalid page/size");
+	   }
        List<Order> all = new ArrayList<>(cache.values());
        int from = page * size;
-       if (from >= all.size()) return Collections.emptyList();
+       if (from >= all.size()) {
+		return Collections.emptyList();
+	   }
        int to = Math.min(from + size, all.size());
        return all.subList(from, to);
    }
@@ -98,9 +118,12 @@ public abstract class FileOrderRepository implements OrderRepository {
      * 주문 상태 업데이트 (Update status only)
      * - 상태 전이(valid transition)는 Order.changeStatus()에서 검증
      */
-    public synchronized boolean updateStatus(String orderId, OrderStatus newStatus) {
+    @Override
+	public synchronized boolean updateStatus(String orderId, OrderStatus newStatus) {
         Order o = cache.get(orderId);
-        if (o == null) return false;
+        if (o == null) {
+			return false;
+		}
         // 상태 전이 검증은 Order.changeStatus가 수행
         o.changeStatus(newStatus);
         persist(cache);
@@ -120,7 +143,8 @@ public abstract class FileOrderRepository implements OrderRepository {
     /**
      * 특정 상태(Status)에 해당하는 모든 주문 조회
      */
-    public synchronized List<Order> findByStatus(OrderStatus status) {
+    @Override
+	public synchronized List<Order> findByStatus(OrderStatus status) {
         return cache.values().stream()
                 .filter(o -> o.getStatus() == status)
                 .collect(Collectors.toList());
@@ -164,8 +188,12 @@ public abstract class FileOrderRepository implements OrderRepository {
      */
     private void ensureFile() {
         try {
-            if (storePath.getParent() != null) Files.createDirectories(storePath.getParent());
-            if (Files.notExists(storePath)) persist(new HashMap<>());
+            if (storePath.getParent() != null) {
+				Files.createDirectories(storePath.getParent());
+			}
+            if (Files.notExists(storePath)) {
+				persist(new HashMap<>());
+			}
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -176,10 +204,14 @@ public abstract class FileOrderRepository implements OrderRepository {
      */
     @SuppressWarnings("unchecked")
     private Map<String, Order> loadAll() {
-        if (Files.notExists(storePath)) return new HashMap<>();
+        if (Files.notExists(storePath)) {
+			return new HashMap<>();
+		}
         try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(storePath))) {
             Object obj = ois.readObject();
-            if (obj instanceof Map) return (Map<String, Order>) obj;
+            if (obj instanceof Map) {
+				return (Map<String, Order>) obj;
+			}
             return new HashMap<>();
         } catch (EOFException e) { // 파일은 있으나 내용이 비어 있을 때
             return new HashMap<>();

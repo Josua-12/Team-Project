@@ -11,7 +11,7 @@ public class MainUserTest {
         UserController userController = new UserController(session);
 
         System.out.println("=== 유저 기능 테스트 ===");
-        
+
 
         while (true) {
             System.out.println("\n메뉴: 1.회원가입 2.로그인 3.마이페이지 4.로그아웃 5.종료");
