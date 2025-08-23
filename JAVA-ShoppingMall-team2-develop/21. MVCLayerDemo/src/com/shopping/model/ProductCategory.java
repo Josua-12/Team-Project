@@ -7,11 +7,11 @@ import java.util.stream.Stream;
  * 상품 카테고리를 한글로 직접 정의하는 열거형 클래스.
  */
 public enum ProductCategory {
-    전자제품,
-    의류,
-    식품,
-    도서,
-    기타;
+	ELECTRONICS, // 전자제품
+    CLOTHING,    // 의류
+    FOOD,        // 식품
+    BOOKS,       // 도서
+    OTHER; 
 
     /**
      * 문자열로부터 해당하는 Enum 상수를 찾아 반환합니다.
