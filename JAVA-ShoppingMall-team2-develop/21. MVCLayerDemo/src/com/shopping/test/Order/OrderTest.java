@@ -1,6 +1,9 @@
 package com.shopping.test.Order;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -97,7 +100,7 @@ class OrderTest {
     @Nested
     @DisplayName("상태 전이")
     class StatusTransition {
-    	
+
         @Test
         @DisplayName("허용 전이: PENDING → CONFIRMED → SHIPPING → DELIVERED")
         void transition_allowed_ok() {

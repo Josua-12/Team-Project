@@ -1,14 +1,17 @@
 package com.shopping.service;
 
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.EnumSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import com.shopping.model.Order;
 import com.shopping.model.OrderItem;
 import com.shopping.model.OrderStatus;
 import com.shopping.repository.OrderRepository;
-
-import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 매출 및 주문 관련 통계를 생성하는 서비스 클래스입니다.

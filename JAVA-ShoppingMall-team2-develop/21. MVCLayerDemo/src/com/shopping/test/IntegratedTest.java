@@ -1,5 +1,19 @@
 package com.shopping.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
 import com.shopping.Auth.Session;
 import com.shopping.model.Order;
 import com.shopping.model.OrderItem;
@@ -9,18 +23,6 @@ import com.shopping.model.User;
 import com.shopping.repository.FileOrderRepository;
 import com.shopping.repository.OrderRepository;
 import com.shopping.service.OrderService;
-import com.shopping.service.ProductService; 
-import com.shopping.service.CartService;
-
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.io.TempDir;
-
-import java.io.ByteArrayInputStream;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 통합 테스트: Product/Cart/Order/Role 흐름을 실제 구현으로 검증
@@ -46,7 +48,7 @@ class IntegratedTest {
 
 	User user;
 	User useradmin;
-	
+
 
     // ====== 시드 상품 ID/가격/재고 (실제 ProductService 있다면 거기서 생성) ======
     final String P100 = "P100"; // 키보드 50,000 재고 10

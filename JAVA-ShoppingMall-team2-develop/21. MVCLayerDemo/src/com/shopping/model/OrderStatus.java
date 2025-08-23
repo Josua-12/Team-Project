@@ -27,10 +27,14 @@ public enum OrderStatus {
     }
 
     public boolean canTransitionTo(OrderStatus next) {
-        if (next == null) return false;
-        if (ALLOW_IDEMPOTENT && this == next) return true;   // 멱등 전이 정책
+        if (next == null) {
+			return false;
+		}
+        if (ALLOW_IDEMPOTENT && this == next) {
+			return true;   // 멱등 전이 정책
+		}
         return ALLOWED.getOrDefault(this, EnumSet.noneOf(OrderStatus.class)).contains(next);
     }
-	
+
 
 }

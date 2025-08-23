@@ -9,20 +9,20 @@ import com.shopping.model.OrderStatus;
 import com.shopping.service.ReportService;
 
 public class ReportController {
-	
+
 	/*
 	 * ReportController
 	 * - ReportService에서 생성된 통계 데이터를 사용자에게 보여주는 콘솔 컨트롤러
 	 */
-	
+
 	private ReportService reportService;
-	
-	
+
+
 	public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
-	
-	
+
+
     /*
      * 특정 기간 동안의 매출을 출력합니다.
      */
@@ -35,13 +35,13 @@ public class ReportController {
 	            System.out.println("⚠️ 날짜 입력 오류: " + e.getMessage());
 	        }
 	    }
-	 
-	 
-	 
+
+
+
 	    /*
 	     * 가장 많이 팔린 상위 N개 상품을 출력합니다.
 	     */
-	 
+
 	    public void printTopProducts(int n) {
 	        try {
 	            Map<String, Integer> topProducts = reportService.topProducts(n);
@@ -56,8 +56,8 @@ public class ReportController {
 	            System.out.println("⚠️ 잘못된 요청: " + e.getMessage());
 	        }
 	    }
-	    
-	    
+
+
 	    /*
 	     * 주문 상태별 건수를 출력합니다.
 	     */
@@ -69,14 +69,14 @@ public class ReportController {
 	            System.out.printf("  %-10s : %d건%n", status, count);
 	        }
 	    }
-	    
-	    
+
+
 	    /*
 	     * 콘솔 메뉴를 통한 통계 조회
 	     */
 	    public void ReportServiceSearchMenu() {
 	        Scanner scanner = new Scanner(System.in);
-	        
+
 	        while (true) {
 	            System.out.println("\n┌───────────────────────────────┐");
 	            System.out.println("│        📊 매출/주문 통계        │");
@@ -127,10 +127,10 @@ public class ReportController {
 	        }
 	    }
 
-	    
-	    
-	    
-	
-	
-	
+
+
+
+
+
+
 }

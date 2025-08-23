@@ -1,11 +1,20 @@
 package com.shopping.test.user;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import com.shopping.model.User;
 import com.shopping.repository.FileUserRepository;
-import com.shopping.util.Constants;
 
 public class FileUserRepositoryTest {
     private static final String TEST_FILE = "test_users.dat";
@@ -21,7 +30,9 @@ public class FileUserRepositoryTest {
     @AfterEach
     void tearDown() {
         File f = new File(TEST_FILE);
-        if (f.exists()) f.delete();
+        if (f.exists()) {
+			f.delete();
+		}
     }
 
     @Test

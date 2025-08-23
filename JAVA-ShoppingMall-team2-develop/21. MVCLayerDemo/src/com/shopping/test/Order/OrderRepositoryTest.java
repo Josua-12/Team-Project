@@ -1,18 +1,27 @@
 package com.shopping.test.Order;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import com.shopping.model.Order;
 import com.shopping.model.OrderItem;
 import com.shopping.model.OrderStatus;
 import com.shopping.repository.OrderRepository;
-
-import org.junit.jupiter.api.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * OrderRepository 인터페이스의 "공통 규약"을 검증하는 컨트랙트 테스트.
@@ -52,7 +61,9 @@ public class OrderRepositoryTest {
 	    public synchronized List<Order> findByUserId(String userId) {
 	        List<Order> result = new ArrayList<>();
 	        for (Order o : map.values()) {
-	            if (Objects.equals(o.getUserId(), userId)) result.add(o);
+	            if (Objects.equals(o.getUserId(), userId)) {
+					result.add(o);
+				}
 	        }
 	        return result;
 	    }
@@ -61,7 +72,9 @@ public class OrderRepositoryTest {
 	    public synchronized List<Order> findByStatus(OrderStatus status) {
 	        List<Order> result = new ArrayList<>();
 	        for (Order o : map.values()) {
-	            if (o.getStatus() == status) result.add(o); // enum 비교는 ==
+	            if (o.getStatus() == status) {
+					result.add(o); // enum 비교는 ==
+				}
 	        }
 	        return result;
 	    }
@@ -73,7 +86,9 @@ public class OrderRepositoryTest {
 	            LocalDate d = o.getOrderDate().toLocalDate();
 	            boolean gteFrom = (from == null) || !d.isBefore(from); // from 이상
 	            boolean lteTo   = (to   == null) || !d.isAfter(to);    // to 이하
-	            if (gteFrom && lteTo) result.add(o);
+	            if (gteFrom && lteTo) {
+					result.add(o);
+				}
 	        }
 	        return result;
 	    }
@@ -81,7 +96,9 @@ public class OrderRepositoryTest {
 	    @Override
 	    public synchronized boolean updateStatus(String orderId, OrderStatus newStatus) {
 	        Order o = map.get(orderId);
-	        if (o == null) return false;
+	        if (o == null) {
+				return false;
+			}
 	        o.changeStatus(newStatus); // 전이 검증은 도메인에 위임
 	        return true;
 	    }
@@ -108,7 +125,9 @@ public class OrderRepositoryTest {
     private static Order newOrder(String userId, OrderItem... items) {
         Order o = new Order();
         o.setUserId(userId);
-        for (OrderItem i : items) o.addItem(i);
+        for (OrderItem i : items) {
+			o.addItem(i);
+		}
         return o;
     }
 

@@ -13,7 +13,7 @@ import com.shopping.model.User;
 
 public class testLoginAndLogout {
 
-	
+
 	@Test
 	void testLoginAndLogout() {
 	    Session session = new Session();

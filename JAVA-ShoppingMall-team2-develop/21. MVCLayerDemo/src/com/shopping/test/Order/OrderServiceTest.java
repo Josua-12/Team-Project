@@ -1,19 +1,21 @@
 package com.shopping.test.Order;
 
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.function.Executable;
-import org.mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-import java.util.*;
 import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.shopping.Auth.Session;
 import com.shopping.model.Order;
@@ -44,7 +46,7 @@ class OrderServiceTest {
     final String OTHER = "other";
     final static User adminUser = new User("admin", "관리자", "admin@example.com", "홍길동");
     final static User User = new User("user", "사용자", "user@example.com", "장하은");
-    
+
     // 간단한 아이템들
     OrderItem i1 = item("P1", "상품1", 1000, 1);
     OrderItem i2 = item("P2", "상품2", 2000, 2); // lineTotal = 4000
@@ -75,7 +77,9 @@ class OrderServiceTest {
         Order o = new Order();           // 기본 PENDING
         o.setOrderId(id);
         o.setUserId(userId);
-        for (OrderItem it : items) o.addItem(it);
+        for (OrderItem it : items) {
+			o.addItem(it);
+		}
         return o;
     }
 
@@ -316,52 +320,52 @@ class OrderServiceTest {
 	 @Nested
 	 @DisplayName("조회/권한")
 	 class QueryAuth {
-	
+
 	     @Test
 	     @DisplayName("getOrder: 본인(USER)만 조회 가능, ADMIN은 모두 가능")
 	     void getOrder_authz() {
 	         Order o = newPendingOrder(ORDER_ID, USER, i1);
 	         when(orderRepo.findById(ORDER_ID)).thenReturn(Optional.of(o));
-	
+
 	         // ADMIN → OK
 	         Order adminView = service.getOrder(ORDER_ID, "admin", Role.ADMIN, adminSession());
 	         assertEquals(ORDER_ID, adminView.getOrderId());
-	
+
 	         // USER & 본인 → OK
 	         Order ownerView = service.getOrder(ORDER_ID, USER, Role.USER, userSession(USER));
 	         assertEquals(ORDER_ID, ownerView.getOrderId());
-	
+
 	         // USER & 타인 → 예외
 	         assertThrows(SecurityException.class,
 	             () -> service.getOrder(ORDER_ID, OTHER, Role.USER, userSession(OTHER)));
-	
+
 	         // ====== verify ======
 	         // getOrder 가 호출될 때마다 findById 한 번씩 → 총 3회
 	         verify(orderRepo, times(3)).findById(ORDER_ID);
 	         // 이 테스트에서는 findByUserId 같은 다른 메서드는 쓰지 않음
 	         verifyNoMoreInteractions(orderRepo);
 	     }
-	
+
 	     @Test
 	     @DisplayName("listOrders: USER는 자신의 주문만, ADMIN은 전체")
 	     void listOrders_filtering() {
 	         Order a = newPendingOrder("O-a", USER, i1);
 	         Order b = newPendingOrder("O-b", OTHER, i2);
-	
+
 	         // ADMIN 경로에서 사용됨
 	         when(orderRepo.findAll()).thenReturn(List.of(a, b));
 	         // USER 경로에서 사용됨
 	         when(orderRepo.findByUserId(USER)).thenReturn(List.of(a));
-	
+
 	         // ADMIN → 전체
 	         List<Order> adminList = service.listOrders("admin", Role.ADMIN);
 	         assertEquals(2, adminList.size());
-	
+
 	         // USER → 본인 것만
 	         List<Order> userList = service.listOrders(USER, Role.USER);
 	         assertEquals(1, userList.size());
 	         assertEquals(USER, userList.get(0).getUserId());
-	
+
 	         // ====== verify ======
 	         verify(orderRepo, times(1)).findAll();             // ADMIN 경로
 	         verify(orderRepo, times(1)).findByUserId(USER);    // USER 경로

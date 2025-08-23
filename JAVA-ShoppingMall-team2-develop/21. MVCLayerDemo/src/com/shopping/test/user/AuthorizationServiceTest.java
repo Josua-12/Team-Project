@@ -1,17 +1,22 @@
 package com.shopping.test.user;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import com.shopping.service.AuthorizationService;
-import com.shopping.service.AuthService;
+
 import com.shopping.exception.UnauthorizedException;
 import com.shopping.model.Role;
+import com.shopping.service.AuthService;
+import com.shopping.service.AuthorizationService;
 
 public class AuthorizationServiceTest {
 
     private AuthorizationService authorizationService;
-    
+
     @Mock
     private AuthService mockAuthService;
 
@@ -21,7 +26,7 @@ public class AuthorizationServiceTest {
         authorizationService = new AuthorizationService(mockAuthService);
     }
 
-    
+
     @Test
     void testAssertLoggedIn_SucceedsWhenLoggedIn() throws UnauthorizedException {
         Mockito.when(mockAuthService.isLoggedIn()).thenReturn(true);

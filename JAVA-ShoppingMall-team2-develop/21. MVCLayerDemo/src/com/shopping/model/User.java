@@ -55,7 +55,9 @@ public class User implements Serializable {
     // 잔액 관련 메서드
     public boolean hasEnoughBalance(int amount) { return balance >= amount; }
     public void deductBalance(int amount) {
-        if (amount > balance) throw new IllegalStateException("잔액 부족");
+        if (amount > balance) {
+			throw new IllegalStateException("잔액 부족");
+		}
         balance -= amount;
     }
 

@@ -1,9 +1,9 @@
 package com.shopping.controller;
 
+import java.util.Scanner;
+
 import com.shopping.Auth.Session;
 import com.shopping.model.Role;
-
-import java.util.Scanner;
 
 /**
  * 메인 컨트롤러 (콘솔)
@@ -24,8 +24,8 @@ public class MainController {
     private final AdminController adminController;
 
     public MainController(Session session,
-                          OrderController orderController, 
-                          UserController userController, 
+                          OrderController orderController,
+                          UserController userController,
                           ProductController productController,
                           CartController cartController,
                           AdminController adminController ) {
@@ -81,7 +81,7 @@ public class MainController {
 	                    case "9" -> safeRun(() -> adminController.handleUserManagement(), "관리/사용자 관리");
 	                    default -> warn();
 	                }
-	            } 
+	            }
         	} catch (java.util.NoSuchElementException e) {
                 return; // ✅ 안전 탈출
             }
@@ -139,12 +139,12 @@ public class MainController {
     // ───────────────────── 연결 포인트 ─────────────────────
 //    // 회원가입
 //    private void signUp() {
-//        userController.register();  
+//        userController.register();
 //    }
 //
 //    // 로그인
 //    private void login() {
-//        userController.login();  
+//        userController.login();
 //    }
 //
 //    // 상품 둘러보기
@@ -183,7 +183,7 @@ public class MainController {
 //    }
 
     private void warn() { System.out.println("잘못된 선택입니다."); }
-    
+
     private void safeRun(Runnable r, String label) {
         try { r.run(); }
         catch (Exception e) { System.out.println("[경고] " + label + " 중 오류: " + e.getMessage()); }

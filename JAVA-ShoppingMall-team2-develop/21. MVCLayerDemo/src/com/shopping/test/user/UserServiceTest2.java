@@ -1,11 +1,16 @@
 package com.shopping.test.user;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import com.shopping.service.UserService;
-import com.shopping.repository.FileUserRepository;
+
 import com.shopping.model.User;
+import com.shopping.repository.FileUserRepository;
+import com.shopping.service.UserService;
 import com.shopping.util.PasswordEncoder;
 
 public class UserServiceTest2 {

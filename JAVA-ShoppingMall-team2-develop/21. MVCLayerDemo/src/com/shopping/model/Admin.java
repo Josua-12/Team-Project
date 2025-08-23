@@ -23,7 +23,7 @@ public class Admin extends User {
     // User 클래스로부터 상속받았으므로 작성할 필요가 없습니다.
     @Override
     public boolean canBrowseProducts() { return true; } // 관리자는 모든 상품 조회 가능
-    
+
     @Override
     public boolean canAddToCart() { return false; } // 관리자는 장바구니 사용 안 함
 
@@ -38,7 +38,7 @@ public class Admin extends User {
 
     @Override
     public boolean canManageUsers() { return true; } // 관리자는 사용자 관리 가능
-    
+
     // 관리자는 잔액 관련 기능이 필요 없으므로 재정의하여 막을 수 있습니다.
     @Override
     public boolean hasEnoughBalance(int amount) {

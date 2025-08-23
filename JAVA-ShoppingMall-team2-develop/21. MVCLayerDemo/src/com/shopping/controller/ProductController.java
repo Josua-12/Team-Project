@@ -1,14 +1,14 @@
 package com.shopping.controller;
 
-import com.shopping.model.Product;
-import com.shopping.model.ProductCategory;
-import com.shopping.repository.FileProductRepository;
-import com.shopping.service.ProductService;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+
+import com.shopping.model.Product;
+import com.shopping.model.ProductCategory;
+import com.shopping.repository.FileProductRepository;
+import com.shopping.service.ProductService;
 
 /**
  * 상품 관련 사용자 요청을 처리하고 ProductService와 통신하여 비즈니스 로직을 실행하는 컨트롤러 클래스입니다.
@@ -87,11 +87,17 @@ public class ProductController {
             String command = scanner.nextLine();
 
             if ("n".equalsIgnoreCase(command)) {
-                if (page < totalPages) page++;
-                else System.out.println("마지막 페이지입니다.");
+                if (page < totalPages) {
+					page++;
+				} else {
+					System.out.println("마지막 페이지입니다.");
+				}
             } else if ("p".equalsIgnoreCase(command)) {
-                if (page > 1) page--;
-                else System.out.println("첫 페이지입니다.");
+                if (page > 1) {
+					page--;
+				} else {
+					System.out.println("첫 페이지입니다.");
+				}
             } else if ("e".equalsIgnoreCase(command)) {
                 break;
             } else {
@@ -223,15 +229,19 @@ public class ProductController {
         try {
             System.out.print("새 상품 이름 (현재: " + currentProduct.getName() + ", 변경 없으면 엔터): ");
             String newName = scanner.nextLine().trim();
-            if (!newName.isEmpty()) currentProduct.setName(newName);
+            if (!newName.isEmpty()) {
+				currentProduct.setName(newName);
+			}
 
             System.out.print("새 상품 가격 (현재: " + currentProduct.getPrice() + ", 변경 없으면 엔터): ");
             String priceInput = scanner.nextLine().trim();
-            if (!priceInput.isEmpty()) currentProduct.setPrice(Integer.parseInt(priceInput));
+            if (!priceInput.isEmpty()) {
+				currentProduct.setPrice(Integer.parseInt(priceInput));
+			}
 
             productService.updateProduct(currentProduct);
             System.out.println("ID " + id + " 상품 정보가 수정되었습니다.");
-        } 
+        }
         /*
          * [수정] 컴파일 오류 해결을 위해 multi-catch 블록을 분리했습니다.
          * NumberFormatException은 숫자가 아닌 값을 입력했을 때,

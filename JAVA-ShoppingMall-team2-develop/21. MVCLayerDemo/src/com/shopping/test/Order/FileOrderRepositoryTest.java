@@ -1,21 +1,29 @@
 package com.shopping.test.Order;
 
-import com.shopping.model.Order;
-import com.shopping.model.OrderItem;
-import com.shopping.model.OrderStatus;
-import com.shopping.repository.FileOrderRepository;
-
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import com.shopping.model.Order;
+import com.shopping.model.OrderItem;
+import com.shopping.model.OrderStatus;
+import com.shopping.repository.FileOrderRepository;
 
 /**
  * 파일 기반 구현(FileOrderRepository)의 단위/통합 경계 테스트
@@ -40,7 +48,9 @@ public class FileOrderRepositoryTest {
     private static Order newOrder(String userId, OrderItem... items) {
         Order o = new Order();
         o.setUserId(userId);
-        for (OrderItem i : items) o.addItem(i);
+        for (OrderItem i : items) {
+			o.addItem(i);
+		}
         return o;
     }
 
