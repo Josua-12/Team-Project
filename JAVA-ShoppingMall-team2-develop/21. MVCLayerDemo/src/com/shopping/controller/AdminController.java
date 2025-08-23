@@ -367,6 +367,7 @@ public class AdminController {
 				break;
 			case "5":
 				listProducts();				//상품 목록 출력
+				break;
 			case "0":
 				return;			// 메인 메뉴로 돌아가기
 			default:
