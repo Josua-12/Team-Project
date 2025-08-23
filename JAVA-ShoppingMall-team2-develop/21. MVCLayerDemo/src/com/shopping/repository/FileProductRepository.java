@@ -17,15 +17,11 @@ import java.util.stream.Collectors;
  * FileManager를 사용하여 파일에서 데이터를 읽고 쓰는 역할을 담당합니다.
  * ProductRepository 인터페이스의 파일 기반 구현체입니다.
  */
-public class FileProductRepository implements ProductRepository {
+public abstract class FileProductRepository implements ProductRepository {
 
     private final Map<String, Product> productStore = new HashMap<>();
     private static final String DATA_FILE_NAME = "products.dat";
-    private long sequence = 0L;
-
-    public FileProductRepository() {
-        loadDataFromFile();
-    }
+    private long sequence = 0L;   
 
     private void loadDataFromFile() {
         List<Product> products = FileManager.readFromFile(DATA_FILE_NAME);
