@@ -229,15 +229,17 @@ public class UserController {
 	       // ----- 아이디 입력 추가 2025.08.23 19:41 조수아 
 	       System.out.print("아이디: ");
 	       String id = scanner.nextLine();
-	       // ----- 아이디 -> 패스워드 -> 이메일 순서 변경 2025.08.23 20:22 장하은
+	       // ----- 아이디 -> 패스워드 순서 변경 2025.08.23 20:22 장하은
 	       System.out.print("패스워드: ");
 	       String password = scanner.nextLine();
-	       System.out.print("이메일: ");
-	       String email = scanner.nextLine();
-	       // -----
+		   // ---- 이메일 입력 삭제 2025.08.23 20:49 조수아
+	    //    System.out.print("이메일: ");
+	    //    String email = scanner.nextLine();
+		   // -------------------------------
+	       
 	       
 	       try {
-	           Role role = authService.login(email, password);  // Role 반환받기
+	           Role role = authService.login(id, password);  // Role 반환받기
 	           Object loggedUser = authService.getLoggedInUser();
 	           
 	           if (role == Role.USER && loggedUser instanceof User user) {
