@@ -30,8 +30,9 @@ public class Product implements Serializable {
     }
 
     public Product() {
-		
-	}
+    
+    }
+
 
 	// Getters and Setters
     public String getId() { return id; }
