@@ -29,7 +29,9 @@ public class Product implements Serializable {
         this.salesCount = 0;
     }
 
-  
+    public Product() {
+		// TODO Auto-generated constructor stub
+	}
 
 
 	public Product(String name, ProductCategory category, int price, int stock, String description) {
