@@ -29,9 +29,19 @@ public class Product implements Serializable {
         this.salesCount = 0;
     }
 
-    public Product() {
-    
-    }
+  
+
+
+	public Product(String name, ProductCategory category, int price, int stock, String description) {
+		super();
+		this.name = name;
+		this.category = category;
+		this.price = price;
+		this.stock = stock;
+		this.description = description;
+	}
+
+
 
 
 	// Getters and Setters

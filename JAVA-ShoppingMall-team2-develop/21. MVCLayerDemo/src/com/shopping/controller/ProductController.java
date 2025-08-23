@@ -37,11 +37,12 @@ public class ProductController {
         do {
             System.out.println("\n--- 상품 조회 메뉴 ---");
             System.out.println("1. 전체 상품 목록 (페이징)");
-            System.out.println("2. 카테고리별 상품 조회");
-            System.out.println("3. 가격대별 상품 조회");
-            System.out.println("4. 베스트셀러 보기");
-            System.out.println("5. 신상품 보기");
-            System.out.println("6. 상품 상세 정보 조회");
+            System.out.println("2. 이름으로 상품 조회");
+            System.out.println("3. 카테고리별 상품 조회");
+            System.out.println("4. 가격대별 상품 조회");
+            System.out.println("5. 베스트셀러 보기");
+            System.out.println("6. 신상품 보기");
+            System.out.println("7. 상품 상세 정보 조회");
             System.out.println("0. 메인 메뉴로 돌아가기");
             System.out.print("메뉴 선택: ");
 
@@ -49,11 +50,12 @@ public class ProductController {
                 choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1: listAllProductsPaginated(); break;
-                    case 2: searchByCategory(); break;
-                    case 3: searchByPriceRange(); break;
-                    case 4: listBestSellers(); break;
-                    case 5: listNewArrivals(); break;
-                    case 6: viewProductDetail(); break;
+                    case 2: searchByName();; break;
+                    case 3: searchByCategory(); break;
+                    case 4: searchByPriceRange(); break;
+                    case 5: listBestSellers(); break;
+                    case 6: listNewArrivals(); break;
+                    case 7: viewProductDetail(); break;
                     case 0: System.out.println("메인 메뉴로 돌아갑니다."); break;
                     default: System.out.println("잘못된 메뉴 선택입니다.");
                 }

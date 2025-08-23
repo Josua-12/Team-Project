@@ -46,7 +46,8 @@ public class MainController {
 	                switch (sel) {
 	                    case "1" -> safeRun(() -> userController.register(), "회원가입");
 	                    case "2" -> safeRun(() -> userController.login(), "로그인");
-	                    case "3" -> safeRun(() -> productController.listAllProductsPaginated(), "상품 둘러보기");
+	                    // 8.23 20:13 홍종학 productController.listAllProductsPaginated() -> productController.startMainMenu()
+	                    case "3" -> safeRun(() -> productController.startMainMenu(), "상품 둘러보기");
 	                    case "4" -> { // 프로그램 종료
 	                        System.out.println("프로그램을 종료합니다.");
 	                        return;
@@ -57,28 +58,28 @@ public class MainController {
 	                showUserMenu(session.getUserId());
 	                String sel = sc.nextLine().trim();
 	                switch (sel) {
-	                    // case "1" -> safeRun(() -> browseProducts(), "상품 둘러보기");
-	                    // case "2" -> safeRun(() -> searchProducts(), "상품 검색");
-	                    case "3" -> safeRun(() -> cartController.runCartMenu(session.getUserId()), "장바구니 관리");
-	                    case "4" -> safeRun(() -> orderController.orderMenu(), "주문 메뉴 처리");
-	                    case "5" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
-	                    case "6" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
-	                    case "7" -> safeRun(() -> userController.logout(), "로그아웃");
+	                	// 8.23 20:13 홍종학 케이스 1 메서드 변경 2 삭제 나머지 번호 수정
+	                    case "1" -> safeRun(() -> productController.startMainMenu(), "상품 둘러보기");
+	                    case "2" -> safeRun(() -> cartController.runCartMenu(session.getUserId()), "장바구니 관리");
+	                    case "3" -> safeRun(() -> orderController.orderMenu(), "주문 메뉴 처리");
+	                    case "4" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
+	                    case "5" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
+	                    case "6" -> safeRun(() -> userController.logout(), "로그아웃");
 	                    default -> warn();
 	                }
 	            } else { // ADMIN
 	                showAdminMenu();
 	                String sel = sc.nextLine().trim();
 	                switch (sel) {
-	                    // case "1" -> safeRun(() -> browseProducts(), "상품 둘러보기");
-	                    // case "2" -> safeRun(() -> searchProducts(), "상품 검색");
-	                    case "3" -> safeRun(() -> cartController.runCartMenu(session.getUserId()), "장바구니 관리");
-	                    case "4" -> safeRun(() -> orderController.orderMenu(), "주문 메뉴 처리");
-	                    case "5" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
-	                    case "6" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
-	                    case "7" -> safeRun(() -> userController.logout(), "로그아웃");
-	                    case "8" -> safeRun(() -> adminController.handleProductManagement(), "관리/상품 관리");
-	                    case "9" -> safeRun(() -> adminController.handleUserManagement(), "관리/사용자 관리");
+	                	// 8.23 20:13 홍종학 케이스 1 메서드 변경 2 삭제 나머지 번호 수정
+	                	case "1" -> safeRun(() -> productController.startMainMenu(), "상품 둘러보기");
+	                    case "2" -> safeRun(() -> cartController.runCartMenu(session.getUserId()), "장바구니 관리");
+	                    case "3" -> safeRun(() -> orderController.orderMenu(), "주문 메뉴 처리");
+	                    case "4" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
+	                    case "5" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
+	                    case "6" -> safeRun(() -> userController.logout(), "로그아웃");
+	                    case "7" -> safeRun(() -> adminController.handleProductManagement(), "관리/상품 관리");
+	                    case "8" -> safeRun(() -> adminController.handleUserManagement(), "관리/사용자 관리");
 	                    default -> warn();
 	                }
 	            } 
@@ -89,7 +90,7 @@ public class MainController {
     }
 
     // ───────────────────── 화면 출력 ─────────────────────
-
+    // 8.23 20:13 홍종학 2. 상품 검색 삭제 후 나머지 번호 수정 
     private void showGuestMenu() {
         System.out.println();
         System.out.println("┌───────────────────────────────────┐");
@@ -109,12 +110,11 @@ public class MainController {
         System.out.println("│   환영합니다, [" + usernameOrId + "]님!   │");
         System.out.println("└───────────────────────────────────┘");
         System.out.println(" 1. 상품 둘러보기");
-        System.out.println(" 2. 상품 검색");
-        System.out.println(" 3. 장바구니 관리");
-        System.out.println(" 4. 주문하기");      // ← 2.4.1
-        System.out.println(" 5. 주문 내역");    // ← 2.4.2
-        System.out.println(" 6. 마이페이지");
-        System.out.println(" 7. 로그아웃");
+        System.out.println(" 2. 장바구니 관리");
+        System.out.println(" 3. 주문하기");      // ← 2.4.1
+        System.out.println(" 4. 주문 내역");    // ← 2.4.2
+        System.out.println(" 5. 마이페이지");
+        System.out.println(" 6. 로그아웃");
         System.out.print("\n메뉴를 선택하세요: ");
     }
 
@@ -125,14 +125,13 @@ public class MainController {
         System.out.println("│   [관리자 모드] 환영합니다!         │");
         System.out.println("└───────────────────────────────────┘");
         System.out.println(" 1. 상품 둘러보기");
-        System.out.println(" 2. 상품 검색");
-        System.out.println(" 3. 장바구니 관리");
-        System.out.println(" 4. 주문하기");      // ← 2.4.1
-        System.out.println(" 5. 주문 내역");    // ← 2.4.2
-        System.out.println(" 6. 마이페이지");
-        System.out.println(" 7. 로그아웃");
-        System.out.println(" 8. [관리] 상품 관리");
-        System.out.println(" 9. [관리] 사용자 관리");
+        System.out.println(" 2. 장바구니 관리");
+        System.out.println(" 3. 주문하기");      // ← 2.4.1
+        System.out.println(" 4. 주문 내역");    // ← 2.4.2
+        System.out.println(" 5. 마이페이지");
+        System.out.println(" 6. 로그아웃");
+        System.out.println(" 7. [관리] 상품 관리");
+        System.out.println(" 8. [관리] 사용자 관리");
         System.out.print("\n메뉴를 선택하세요: ");
     }
 
