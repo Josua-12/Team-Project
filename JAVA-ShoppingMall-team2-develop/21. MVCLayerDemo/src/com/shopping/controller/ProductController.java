@@ -68,7 +68,7 @@ public class ProductController {
     /**
      * 전체 상품 목록을 페이지 단위로 나누어 보여줍니다.
      */
-    private void listAllProductsPaginated() {
+    void listAllProductsPaginated() {
         int page = 1;
         long totalProducts = productService.getTotalProductCount();
         long totalPages = (long) Math.ceil((double) totalProducts / PAGE_SIZE);
@@ -292,7 +292,8 @@ public class ProductController {
             System.out.printf("%-10s %-20s %-12s %-5s %-10s\n", "ID", "이름", "가격", "재고", "카테고리");
             System.out.println("-------------------------------------------------------------------");
             for (Product product : products) {
-                System.out.printf("%-10s %-20s %-12.0f %-5d %-10s\n",
+            	// 2025.08.23 18:40 JSA 수정
+                System.out.printf("%-10s %-20s %-12d %-5d %-10s\n",
                         product.getId(), product.getName(), product.getPrice(),
                         product.getStock(), product.getCategory().name());
             }

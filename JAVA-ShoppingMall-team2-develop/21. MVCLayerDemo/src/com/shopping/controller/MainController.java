@@ -46,7 +46,7 @@ public class MainController {
 	                switch (sel) {
 	                    case "1" -> safeRun(() -> userController.register(), "회원가입");
 	                    case "2" -> safeRun(() -> userController.login(), "로그인");
-	                    // case "3" -> safeRun(() -> browseProducts(), "상품 둘러보기");
+	                    case "3" -> safeRun(() -> productController.listAllProductsPaginated(), "상품 둘러보기");
 	                    case "4" -> { // 프로그램 종료
 	                        System.out.println("프로그램을 종료합니다.");
 	                        return;
