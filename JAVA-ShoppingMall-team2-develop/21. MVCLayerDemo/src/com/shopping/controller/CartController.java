@@ -53,7 +53,7 @@ public class CartController {
                     if (productOptional.isPresent()) {
                         Product product = productOptional.get(); // Optional에서 실제 Product 객체를 꺼냄
 
-                        System.out.print("수량을 입력하세요: ");
+                        System.out.printf("추가할 수량을 입력하세요 (현재 재고: %d개): ", product.getStock());
                         int quantity = scanner.nextInt();
                         scanner.nextLine(); // 버퍼 비우기
 
@@ -87,12 +87,29 @@ public class CartController {
 
 
     private void addProductToCart(String userId, Product product, int quantity) {
+        // 장바구니를 가져오거나 새로 생성합니다.
         Cart cart = cartRepository.findByUserId(userId)
                                   .orElseGet(() -> new Cart(userId));
 
-        cart.addProduct(product, quantity);
-        cartRepository.save(cart);
-        System.out.printf("✅ '%s' 상품 %d개를 장바구니에 추가했습니다.\n", product.getName(), quantity);
+        // 해당 상품이 이미 장바구니에 있는지 확인합니다.
+        int currentCartQuantity = 0;
+        if (cart.getItems().containsKey(product.getId())) {
+            currentCartQuantity = cart.getItems().get(product.getId()).getQuantity();
+        }
+
+        // 총 수량(현재 장바구니 수량 + 추가하려는 수량)을 계산합니다.
+        int totalQuantity = currentCartQuantity + quantity;
+
+        // 재고를 확인합니다.
+        if (productRepository.hasStock(product.getId(), totalQuantity)) {
+            // 재고가 충분하면 상품을 장바구니에 추가합니다.
+            cart.addProduct(product, quantity);
+            cartRepository.save(cart);
+            System.out.printf("✅ '%s' 상품 %d개를 장바구니에 추가했습니다.\n", product.getName(), quantity);
+        } else {
+            // 재고가 부족하면 오류 메시지를 출력합니다.
+            System.out.printf("⚠️ 재고가 부족합니다. 현재 재고는 %d개이며, 장바구니에는 이미 %d개가 있습니다.\n", product.getStock(), currentCartQuantity);
+        }
     }
 
     private void viewCart(String userId) {
