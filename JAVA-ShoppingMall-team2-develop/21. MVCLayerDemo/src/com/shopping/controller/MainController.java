@@ -71,19 +71,19 @@ public class MainController {
 	                    }
 	                    default -> warn();
 	                }
-	            } else { // ADMIN
+	            } else{ // ADMIN
 	                showAdminMenu();
 	                String sel = sc.nextLine().trim();
 	                switch (sel) {
 	                	// 8.23 20:13 홍종학 케이스 1 메서드 변경 2 삭제 나머지 번호 수정
+	                	// 관리자가 필요없는 세부사항 삭제 2025.08.24 22:53 조수아
 	                	case "1" -> safeRun(() -> productController.startMainMenu(), "상품 둘러보기");
-	                    case "2" -> safeRun(() -> cartController.runCartMenu(session.getUserId()), "장바구니 관리");
-	                    case "3" -> safeRun(() -> orderController.orderMenu(), "주문 메뉴 처리");
-	                    case "4" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
-	                    case "5" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
-	                    case "6" -> safeRun(() -> userController.logout(), "로그아웃");
-	                    case "7" -> safeRun(() -> adminController.handleProductManagement(), "관리/상품 관리");
-	                    case "8" -> safeRun(() -> adminController.handleUserManagement(), "관리/사용자 관리");
+	                    //case "2" -> safeRun(() -> cartController.runCartMenu(session.getUserId()), "장바구니 관리");
+	                    //case "2" -> safeRun(() -> orderController.orderMenu(), "주문 메뉴 처리");
+	                    case "2" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
+	                    //case "5" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
+	                    case "3" -> safeRun(() -> adminController.showAdminMenu(), "상품/사용자/주문 관리");
+	                    case "4" -> safeRun(() -> userController.logout(), "로그아웃");
 	                    case "0" -> {
 	                    	System.out.println("상위 메뉴로 돌아갑니다.");
 	                    	return;
@@ -123,23 +123,21 @@ public class MainController {
         System.out.println(" 4. 주문 내역");    // ← 2.4.2
         System.out.println(" 5. 마이페이지");
         System.out.println(" 6. 로그아웃");
+        System.out.println(" 0. 뒤로 가기");
         System.out.print("\n메뉴를 선택하세요: ");
     }
 
     private void showAdminMenu() {
         System.out.println();
         System.out.println("┌───────────────────────────────────┐");
-        System.out.println("│   🔧  Java Shopping Mall          │");
-        System.out.println("│   [관리자 모드] 환영합니다!         │");
+        System.out.println("│   🔧  Java Shopping Mall    		│");
+        System.out.println("│   [관리자 모드] 환영합니다!         		│");
         System.out.println("└───────────────────────────────────┘");
         System.out.println(" 1. 상품 둘러보기");
-        System.out.println(" 2. 장바구니 관리");
-        System.out.println(" 3. 주문하기");      // ← 2.4.1
-        System.out.println(" 4. 주문 내역");    // ← 2.4.2
-        System.out.println(" 5. 마이페이지");
-        System.out.println(" 6. 로그아웃");
-        System.out.println(" 7. [관리] 상품 관리");
-        System.out.println(" 8. [관리] 사용자 관리");
+        System.out.println(" 2. 주문 내역 처리");
+        System.out.println(" 3. [관리] 상품/사용자/주문 관리");
+        System.out.println(" 4. 로그아웃");
+        System.out.println(" 0. 뒤로 가기");
         System.out.print("\n메뉴를 선택하세요: ");
     }
 
