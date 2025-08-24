@@ -73,25 +73,27 @@ public class AuthService {
      * @return 로그인한 사용자의 Role (USER 또는 ADMIN)
      * @throws Exception 로그인 실패 시
      */
-    public Role login(String email, String password) throws Exception {
+    // ----- 로그인 시 아이디, 비밀번호로 사용자 및 관리자 분류 수정 2025.08.24 16:52 조수아
+    public Role login(String id, String password) throws Exception {
         // User 먼저 검색
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findById(id);
         if (user != null && PasswordEncoder.matches(password, user.getPassword())) {
             loggedInUser = user;
-            System.out.println("사용자 로그인 성공: " + email);
+            System.out.println("사용자 로그인 성공: " + user.getName());
             return Role.USER;
         }
 
         // Admin 검색
-        Admin admin = adminRepository.findByEmail(email);
+        Admin admin = adminRepository.findById(id);
         if (admin != null && PasswordEncoder.matches(password, admin.getPassword())) {
             loggedInUser = admin;
-            System.out.println("관리자 로그인 성공: " + email);
+            System.out.println("관리자 로그인 성공: " + admin.getName());
             return Role.ADMIN;
         }
 
         throw new Exception("이메일 또는 비밀번호가 잘못되었습니다.");
     }
+    // -------------------------------------------------------------------------
 
     /**
      * 로그아웃
