@@ -137,13 +137,15 @@ public class ProductController {
         printProductList(products);
     }
 
+    // 1만원 미만 상품 없으므로 삭제 2025.08.24 17:05 조수아
     private void searchByPriceRange() {
         System.out.println("\n--- 가격대 선택 ---");
-        System.out.println("1. 1만원 미만");
-        System.out.println("2. 1만원 ~ 5만원 미만");
-        System.out.println("3. 5만원 ~ 10만원 미만");
-        System.out.println("4. 10만원 이상");
+        //System.out.println("1. 1만원 미만");
+        System.out.println("1. 1만원 ~ 5만원 미만");
+        System.out.println("2. 5만원 ~ 10만원 미만");
+        System.out.println("3. 10만원 이상");
         System.out.print("선택: ");
+        // ---------------------------------------
 
         try {
             int choice = Integer.parseInt(scanner.nextLine());
