@@ -46,17 +46,13 @@ public class UserController {
 	// 마이페이지
 	public void myPage(User user) {
 		while(true) {
-			System.out.println("\n╔════════════════════════════════════════════╗");
-	        System.out.println("║                   마이 페이지                   ║");
-	        System.out.println("╚══════════════════════════════════════════════╝\n");
-
-	        System.out.println("║1. 내 정보 조회                                  ║");
-	        System.out.println("║2. 비밀번호 변경                                  ║");
-	        System.out.println("║3. 개인정보 수정                                  ║");
-	        System.out.println("║4. 주문 내역 조회                                 ║");
-	        System.out.println("║5. 회원 탈퇴                                     ║");
-	        System.out.println("║6. 돌아가기                                      ║");
-	        System.out.println("╚══════════════════════════════════════════════╝\n");
+			System.out.println("\n--- 마이 페이지 ---");
+	        System.out.println("1. 내 정보 조회");
+	        System.out.println("2. 비밀번호 변경");
+	        System.out.println("3. 개인정보 수정");
+	        System.out.println("4. 주문 내역 조회");
+	        System.out.println("5. 회원 탈퇴");
+	        System.out.println("0. 뒤로 ");
 
 	        String choice = scanner.nextLine();
 
@@ -76,7 +72,7 @@ public class UserController {
             case "5":
             	deleteAccount();
                 break;
-            case "6":
+            case "0":
                 return;   // 메뉴 종료
             default:
                 System.out.println("잘못된 선택입니다.");

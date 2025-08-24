@@ -44,7 +44,7 @@ public class ProductController {
             System.out.println("6. 신상품 보기");
             System.out.println("7. 상품 상세 정보 조회");
             System.out.println("0. 메인 메뉴로 돌아가기");
-            System.out.print("메뉴 선택: ");
+            System.out.print("\n메뉴를 선택하세요: ");
 
             try {
                 choice = Integer.parseInt(scanner.nextLine());

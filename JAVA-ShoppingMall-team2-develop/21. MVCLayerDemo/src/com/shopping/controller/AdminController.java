@@ -37,12 +37,12 @@ public class AdminController {
 	// 관리자 기능 메뉴 표시 및 처리
 	public void showAdminMenu() {
 		while(true) {
-			System.out.println("\n== 관리자 기능 ==");
+			System.out.println("\n--- 관리자 기능 ---");
 			System.out.println("1. 상품 관리");
 			System.out.println("2. 사용자 관리");
 			System.out.println("3. 주문 관리");
 			System.out.println("0. 돌아가기");
-			System.out.print("선택: ");
+			System.out.print("\n메뉴를 선택하세요: ");
 
 			String choice = scanner.nextLine();
 
@@ -69,12 +69,12 @@ public class AdminController {
 
 	private void handleOrderManagement() {
 		while(true) {
-			System.out.println("\n== 주문 관리 메뉴 ==");
+			System.out.println("\n--- 주문 관리 메뉴 ---");
 			System.out.println("1. 전체 주문 목록 조회");
 			System.out.println("2. 주문 상태 변경");
 			System.out.println("3. 주문 통계 조회 (일별, 상품별)");
 			System.out.println("0. 돌아가기");
-			System.out.print("선택: ");
+			System.out.print("\n메뉴를 선택하세요: ");
 
 			String choice = scanner.nextLine();
 
@@ -99,7 +99,7 @@ public class AdminController {
 	}
 
 	 private void displayAllOrders() {
-	        System.out.println("\n== 전체 주문 목록 ==");
+	        System.out.println("\n--- 전체 주문 목록 ---");
 	        List<Order> orders = orderService.getAllOrders();
 	        if (orders.isEmpty()) {
 	            System.out.println("주문 내역이 없습니다.");
@@ -109,7 +109,7 @@ public class AdminController {
 	    }
 
 	 private void updateOrderStatus() {
-	        System.out.println("\n== 주문 상태 변경 ==");
+	        System.out.println("\n--- 주문 상태 변경 ---");
 	        System.out.print("상태를 변경할 주문의 ID를 입력하세요: ");
 	        String orderId = scanner.nextLine();
 
@@ -144,7 +144,7 @@ public class AdminController {
 	    }
 
 	 private void displayOrderStatistics() {
-		    System.out.println("\n== 주문 통계 조회 ==");
+		    System.out.println("\n--- 주문 통계 조회 ---");
 
 		    // 1. 일별 매출 통계 (ReportService 사용)
 		    System.out.println("\n--- 일별 총 매출 ---");
@@ -195,14 +195,14 @@ public class AdminController {
 
 	public void handleUserManagement() {
 		while(true) {
-			System.out.println("\n== 사용자 관리 메뉴 ==");
+			System.out.println("\n--- 사용자 관리 메뉴 ---");
 			System.out.println("1. 전체 회원 목록 조회");
 			System.out.println("2. 회원 검색 (ID, 이름, 이메일)");
 			System.out.println("3. 회원 상세 정보 조회");
 			System.out.println("4. 회원 강제 탈퇴");
-			System.out.println("0. 돌아가기");
-			System.out.print("선택: ");
-
+			System.out.println("0. 뒤로 가기");
+			System.out.print("\n메뉴를 선택하세요: ");
+			
 			String choice = scanner.nextLine();
 
 			// 사용자 선택에 따른 메소드 호출
@@ -243,12 +243,12 @@ public class AdminController {
 
 	private void searchUsers() {
 		while(true) {
-			System.out.println("\n== 회원 검색 ==");
+			System.out.println("\n--- 회원 검색 ---");
 			System.out.println("1. ID로 회원 검색");
 			System.out.println("2. 이름으로 회원 검색");
 			System.out.println("3. 이메일로 회원 검색");
 			System.out.println("0. 돌아가기");
-			System.out.print("선택: ");
+			System.out.print("\n메뉴를 선택하세요: ");
 
 			String choice = scanner.nextLine();
 
@@ -340,14 +340,14 @@ public class AdminController {
 
 	public void handleProductManagement() {
 		while(true) {
-			System.out.println("\n== 상품 관리 메뉴 ==");
+			System.out.println("\n--- 상품 관리 메뉴 ---");
 			System.out.println("1. 신규 상품 등록");
 			System.out.println("2. 상품 정보 수정");
 			System.out.println("3. 상품 삭제");
 			System.out.println("4. 재고 관리 (입고 처리)");
 			System.out.println("5. 상품 목록 조회");
-			System.out.println("0. 돌아가기");
-			System.out.print("선택: ");
+			System.out.println("0. 뒤로 가기");
+			System.out.print("\n메뉴를 선택하세요: ");
 
 			String choice = scanner.nextLine();
 
@@ -378,7 +378,7 @@ public class AdminController {
 	}
 	 private void addNewProduct() {
 	        try {
-	            System.out.println("\n== 신규 상품 등록 ==");
+	            System.out.println("\n--- 신규 상품 등록 ---");
 	            System.out.print("상품명: ");
 	            String name = scanner.nextLine();
 	            System.out.print("가격: ");
@@ -403,7 +403,7 @@ public class AdminController {
 	    }
 
 	    private void updateProductInfo() {
-	        System.out.println("\n== 상품 정보 수정 ==");
+	        System.out.println("\n--- 상품 정보 수정 ---");
 	        System.out.print("수정할 상품의 ID를 입력하세요: ");
 	        String id = scanner.nextLine();
 
@@ -451,7 +451,7 @@ public class AdminController {
 	    }
 
 	    private void deleteProduct() {
-	        System.out.println("\n== 상품 삭제 ==");
+	        System.out.println("\n--- 상품 삭제 ---");
 	        System.out.print("삭제할 상품의 ID를 입력하세요: ");
 	        String id = scanner.nextLine();
 
@@ -463,7 +463,7 @@ public class AdminController {
 	    }
 
 	    private void manageProductStock() {
-	        System.out.println("\n== 재고 관리 (입고) ==");
+	        System.out.println("\n--- 재고 관리 (입고) ---");
 	        System.out.print("재고를 추가할 상품의 ID를 입력하세요: ");
 	        String id = scanner.nextLine();
 
