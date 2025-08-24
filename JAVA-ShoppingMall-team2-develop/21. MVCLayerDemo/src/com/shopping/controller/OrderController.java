@@ -13,6 +13,7 @@ import com.shopping.model.Product;
 import com.shopping.model.Role;
 import com.shopping.model.User;
 import com.shopping.repository.CartRepository;
+import com.shopping.repository.ProductRepository;
 import com.shopping.service.OrderService;
 import com.shopping.service.ProductService;
 
@@ -21,16 +22,18 @@ public class OrderController {
     private final OrderService orderService;
     private final ProductService productService; // ProductService 추가 2025.08.24 17:27 조수아
     private final CartRepository cartRepository; // CartRepository 추가 2025.08.24 17:27 조수아
+    private final ProductRepository productRepository;
     private final Session session;
     private final Scanner sc;
     
 
     public OrderController(OrderService orderService, Session session, 
-    		ProductService productService,CartRepository cartRepository,Scanner sc) {
+    		ProductService productService,CartRepository cartRepository, ProductRepository productRepository, Scanner sc) {
         this.orderService = orderService;
         this.session = session;
         this.productService = productService;
         this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
         this.sc = sc;
     }
 
@@ -117,8 +120,15 @@ public class OrderController {
         }
 
         List<OrderItem> cartItems = new ArrayList<>();
-        cartOpt.get().getItems().forEach((productId, cartItem) -> {
-            cartItems.add(new OrderItem(productId, cartItem.getQuantity()));
+        cartOpt.get().getItems().forEach((productId,  cartItem) -> {
+        	Product p = productRepository.findById(productId)
+                    .orElseThrow(() -> new IllegalArgumentException("상품 없음: " + productId));
+        	cartItems.add(new OrderItem(
+        	        productId,
+        	        p.getName(),       // 상품명
+        	        p.getPrice(),      // 단가
+        	        cartItem.getQuantity()
+        	    ));
         });
 
         // 이후 주문 처리 로직 - 8.24 19:04 홍종학 주문완료 후 장바구니 비우기 로직 추가
@@ -158,9 +168,12 @@ public class OrderController {
             String address = inputAddress();
 
             List<OrderItem> items = new ArrayList<>();
-            items.add(new OrderItem(product.getId(), qty));
-            Order order = orderService.placeOrder(session.getUserId(), items, Role.USER);
+            items.add(new OrderItem(product.getId(), product.getName(), product.getPrice(), qty));
 
+            // 주문 생성
+            Order order = orderService.placeOrder(session.getUserId(), items, Role.USER);
+            System.out.println("주문 완료: " + order.getOrderId());
+            
             // 배송 주소 처리 로직 필요 (Order에 배송정보 필드 없으면 추가 필요)
 
             System.out.println("상품 즉시 구매 주문이 완료되었습니다. 주문 ID: " + order.getOrderId() + 

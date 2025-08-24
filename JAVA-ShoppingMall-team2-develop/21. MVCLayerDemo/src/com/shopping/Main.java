@@ -96,6 +96,7 @@ public class Main {
         DefaultFileOrderRepository orderRepoImpl = new DefaultFileOrderRepository("data/orders.dat");
         OrderRepository orderRepo               = orderRepoImpl;       // upcast
         FileOrderRepository fileOrderRepo       = orderRepoImpl;       // upcast
+        
 
         // 상품 저장소
         FileProductRepository fileProductRepo = new FileProductRepository(); // 생성자 인자 없을 때
@@ -116,7 +117,7 @@ public class Main {
         // 컨트롤러 생성
         UserController userController = new UserController(session);
         ProductController productController = new ProductController(productService, scanner);
-        OrderController orderController = new OrderController(orderService, session, productService, cartRepo, scanner);
+        OrderController orderController = new OrderController(orderService, session, productService, cartRepo, productRepo, scanner);
         CartController cartController = new CartController(productRepo, cartRepo);
         AdminController adminController = new AdminController(userService, orderService, productService, reportService);
         ReportController reportController = new ReportController(reportService);

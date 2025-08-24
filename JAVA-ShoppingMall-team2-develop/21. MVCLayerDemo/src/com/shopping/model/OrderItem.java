@@ -20,16 +20,16 @@ public class OrderItem implements Serializable {
     private int unitPrice;      // 단가(>=0)
     private int quantity;             // 수량(>=1)
 
-    // 2. 생성자
-    // 기본 생성자는 직렬화/프레임워크용으로만 필요하면 유지
-    public OrderItem(String productId, int quantity) {
-        this.productId = productId;
-        this.quantity = quantity;
-        // productName과 unitPrice는 필요하다면 별도로 세터나 다른 생성자에서 설정 가능
-    }
-
-
+    
     // 2-2. 파라미터 생성자
+    // 기본 생성자는 직렬화/프레임워크용으로만 필요하면 유지
+    // ----- before 생성자 수정 2025.08.25 00:19 장하은
+    // public OrderItem(String productId, int quantity) {
+    // this.productId = productId;
+    // this.quantity = quantity;
+    // productName과 unitPrice는 필요하다면 별도로 세터나 다른 생성자에서 설정 가능
+    //    }
+    // ----- after 생성자 수정 2025.08.25 00:19 장하은
     public OrderItem(String productId, String productName, int unitPrice, int quantity) {    // 파라미터 생성자 → "이미 확정된 주문을 재구성" (DB에서 꺼내거나 API 응답으로 받아옴).
         if (productId == null || productId.isBlank()) {
 			throw new IllegalArgumentException("productId empty");
@@ -49,7 +49,8 @@ public class OrderItem implements Serializable {
         this.quantity = quantity;
     }
 
-    // 4. 편의 메서드
+
+	// 4. 편의 메서드
     /** 소계 = 단가 * 수량 */
     public int getLineTotal() {
         return unitPrice * quantity;
