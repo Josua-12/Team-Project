@@ -65,10 +65,6 @@ public class MainController {
 	                    case "4" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
 	                    case "5" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
 	                    case "6" -> safeRun(() -> userController.logout(), "로그아웃");
-	                    case "0" -> {
-	                    	System.out.println("상위 메뉴로 돌아갑니다.");
-	                    	return;
-	                    }
 	                    default -> warn();
 	                }
 	            } else{ // ADMIN
@@ -84,10 +80,6 @@ public class MainController {
 	                    //case "5" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
 	                    case "3" -> safeRun(() -> adminController.showAdminMenu(), "상품/사용자/주문 관리");
 	                    case "4" -> safeRun(() -> userController.logout(), "로그아웃");
-	                    case "0" -> {
-	                    	System.out.println("상위 메뉴로 돌아갑니다.");
-	                    	return;
-	                    }
 	                    default -> warn();
 	                }
 	            }
@@ -123,7 +115,6 @@ public class MainController {
         System.out.println(" 4. 주문 내역");    // ← 2.4.2
         System.out.println(" 5. 마이페이지");
         System.out.println(" 6. 로그아웃");
-        System.out.println(" 0. 뒤로 가기");
         System.out.print("\n메뉴를 선택하세요: ");
     }
 
@@ -135,9 +126,8 @@ public class MainController {
         System.out.println("└───────────────────────────────────┘");
         System.out.println(" 1. 상품 둘러보기");
         System.out.println(" 2. 주문 내역 처리");
-        System.out.println(" 3. [관리] 상품/사용자/주문 관리");
+        System.out.println(" 3. 관리자 기능");
         System.out.println(" 4. 로그아웃");
-        System.out.println(" 0. 뒤로 가기");
         System.out.print("\n메뉴를 선택하세요: ");
     }
 
