@@ -26,7 +26,7 @@ public class OrderController {
     private final Session session;
     private final Scanner sc;
     
-
+    // ----- productRepository 추가 2025.08.25 장하은
     public OrderController(OrderService orderService, Session session, 
     		ProductService productService,CartRepository cartRepository, ProductRepository productRepository, Scanner sc) {
         this.orderService = orderService;
