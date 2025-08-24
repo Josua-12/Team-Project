@@ -9,11 +9,11 @@ import com.shopping.model.OrderStatus;
 
 public interface OrderRepository {
 
-		// 생성/수정 (동일 ID가 있으면 갱신, 없으면 신규)
-		void save(Order order);
-
-		// 단건 조회
-		Optional<Order> findById(String orderId);
+		/** 생성/수정 (동일 ID가 있으면 갱신, 없으면 신규) */
+	    void save(Order order);
+	
+	    /** 단건 조회 */
+	    Optional<Order> findById(String orderId);
 
 		// 전체 조회
 		List<Order> findAll();
