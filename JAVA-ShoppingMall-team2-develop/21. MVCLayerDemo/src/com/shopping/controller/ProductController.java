@@ -56,7 +56,7 @@ public class ProductController {
                     case 5: listBestSellers(); break;
                     case 6: listNewArrivals(); break;
                     case 7: viewProductDetail(); break;
-                    case 0: System.out.println("메인 메뉴로 돌아갑니다."); break;
+                    case 0: System.out.println("상위 메뉴로 돌아갑니다."); return;
                     default: System.out.println("잘못된 메뉴 선택입니다.");
                 }
             } catch (NumberFormatException e) {

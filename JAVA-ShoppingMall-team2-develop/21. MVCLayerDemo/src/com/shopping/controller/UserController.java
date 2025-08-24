@@ -52,7 +52,7 @@ public class UserController {
 	        System.out.println("3. 개인정보 수정");
 	        System.out.println("4. 주문 내역 조회");
 	        System.out.println("5. 회원 탈퇴");
-	        System.out.println("0. 뒤로 ");
+	        System.out.println("0. 뒤로 가기");
 
 	        String choice = scanner.nextLine();
 
@@ -73,6 +73,7 @@ public class UserController {
             	deleteAccount();
                 break;
             case "0":
+            	System.out.println("상위 메뉴로 돌아갑니다.");
                 return;   // 메뉴 종료
             default:
                 System.out.println("잘못된 선택입니다.");

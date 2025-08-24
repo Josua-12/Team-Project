@@ -58,6 +58,7 @@ public class AdminController {
 				handleOrderManagement();		// 주문 관리
 				break;
 			case "0":
+				System.out.println("상위 메뉴로 돌아갑니다.");
 				return;			// 메인 메뉴로 돌아가기
 			default:
 				System.out.println("잘못된 선택입니다.");
@@ -90,6 +91,7 @@ public class AdminController {
 				displayOrderStatistics();		// 주문 통계 조회
 				break;
 			case "0":
+				System.out.println("상위 메뉴로 돌아갑니다.");
 				return;			// 메인 메뉴로 돌아가기
 			default:
 				System.out.println("잘못된 선택입니다.");
@@ -220,6 +222,7 @@ public class AdminController {
 				deactivateUser();		// 회원 강제 탈퇴
 				break;
 			case "0":
+				System.out.println("상위 메뉴로 돌아갑니다.");
 				return;			// 메인 메뉴로 돌아가기
 			default:
 				System.out.println("잘못된 선택입니다.");
@@ -264,6 +267,7 @@ public class AdminController {
 				searchUsersByEmail();		// 이메일로 회원 검색
 				break;
 			case "0":
+				System.out.println("상위 메뉴로 돌아갑니다.");
 				return;			// 메인 메뉴로 돌아가기
 			default:
 				System.out.println("잘못된 선택입니다.");
@@ -369,6 +373,7 @@ public class AdminController {
 				listProducts();				//상품 목록 출력
 				break;
 			case "0":
+				System.out.println("상위 메뉴로 돌아갑니다.");
 				return;			// 메인 메뉴로 돌아가기
 			default:
 				System.out.println("잘못된 선택입니다.");

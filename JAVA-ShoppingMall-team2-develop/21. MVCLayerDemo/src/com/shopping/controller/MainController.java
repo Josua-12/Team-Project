@@ -66,6 +66,7 @@ public class MainController {
 	                    case "5" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
 	                    case "6" -> safeRun(() -> userController.logout(), "로그아웃");
 	                    case "0" -> {
+	                    	System.out.println("상위 메뉴로 돌아갑니다.");
 	                    	return;
 	                    }
 	                    default -> warn();
@@ -84,6 +85,7 @@ public class MainController {
 	                    case "7" -> safeRun(() -> adminController.handleProductManagement(), "관리/상품 관리");
 	                    case "8" -> safeRun(() -> adminController.handleUserManagement(), "관리/사용자 관리");
 	                    case "0" -> {
+	                    	System.out.println("상위 메뉴로 돌아갑니다.");
 	                    	return;
 	                    }
 	                    default -> warn();
