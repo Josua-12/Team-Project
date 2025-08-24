@@ -53,6 +53,8 @@ public class UserController {
 	        System.out.println("4. 주문 내역 조회");
 	        System.out.println("5. 회원 탈퇴");
 	        System.out.println("0. 뒤로 가기");
+			System.out.print("\n메뉴를 선택하세요: ");
+		
 
 	        String choice = scanner.nextLine();
 
