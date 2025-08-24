@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -192,16 +193,29 @@ public class Order implements Serializable {
 
     // 6. toString
     @Override
-//    public String toString() {
-//        return String.format("Order[id=%s, user=%s, total=%,d, date=%s, status=%s]",
-//                orderId, userId, totalPrice, orderDate, status.getDisplayName());
-//    }
     public String toString() {
-    	String st = (status != null) ? status.getDisplayName() : "null";
+        // 주문 상품 목록을 문자열로 변환
+        String itemsString = items.stream()
+            .map(item -> "    - " + item.toString()) // 각 OrderItem 앞에 들여쓰기 추가
+            .collect(Collectors.joining("\n"));
 
-
-    	return String.format("Order[id=%s, user=%s, total=%,d, date=%s, status=%s]",
-    	orderId, userId, totalPrice, orderDate, st);
-
-    	}
+        return String.format(
+            "========================================\n" +
+            "  주문 ID: %s\n" +
+            "  주문자 ID: %s\n" +
+            "  주문일시: %s\n" +
+            "  주문 상태: %s\n" +
+            "----------------------------------------\n" +
+            "  주문 상품 목록:\n%s\n" + // 상품 목록 출력
+            "----------------------------------------\n" +
+            "  총 결제 금액: %,d원\n" +
+            "========================================",
+            orderId,
+            userId,
+            orderDate,
+            status.getDisplayName(),
+            itemsString,
+            totalPrice
+        );
+    }
 }
