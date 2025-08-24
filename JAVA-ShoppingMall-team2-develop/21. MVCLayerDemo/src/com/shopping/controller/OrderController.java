@@ -225,8 +225,32 @@ public class OrderController {
         String orderId = sc.nextLine();
 
         try {
-            Order order = orderService.getOrder(orderId, session.getUserId(), session.getRole(), session);
-            System.out.println(order);
+        	// ----- before : 주문 상세 정보 조회 order -> orderItem으로 변경 2025.08.24 23:17 장하은
+        	//Order order = orderService.getOrder(orderId, session.getUserId(), session.getRole(), session);
+        	//System.out.println(order);
+        	
+        	// ----- after : 주문 상세 정보 조회 order -> orderItem으로 변경 2025.08.24 23:17 장하은
+        	var order = orderService.getOrder(orderId, session.getUserId(), session.getRole(), session);
+
+        	// 주문 기본정보 출력
+        	System.out.println("주문 ID: " + order.getOrderId());
+        	System.out.println("주문자: " + order.getUserId());
+        	System.out.println("상태: " + order.getStatus());
+        	System.out.println("총액: " + order.getTotalPrice());
+
+        	// 주문 아이템들 출력
+        	for (OrderItem item : order.getItems()) {
+        	    System.out.printf("상품ID=%s, 상품명=%s, 단가=%d, 수량=%d, 라인합계=%d%n",
+        	            item.getProductId(),
+        	            item.getProductName(),
+        	            item.getUnitPrice(),
+        	            item.getQuantity(),
+        	            item.getLineTotal()
+        	    );
+        	// -------------------------------
+        	}
+        	
+        	
         } catch (Exception e) {
             System.out.println("에러: " + e.getMessage());
         }
