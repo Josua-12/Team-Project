@@ -77,7 +77,7 @@ public class CartController {
                     clearCart(userId);
                     break;
                 case 0:
-                    System.out.println("메인 메뉴로 돌아갑니다.");
+                	System.out.println("상위 메뉴로 돌아갑니다.");
                     return;
                 default:
                     System.out.println("잘못된 입력입니다. 다시 선택해주세요.");

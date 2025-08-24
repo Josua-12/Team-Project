@@ -79,10 +79,10 @@ public class ReportController {
 
 	        while (true) {
 	            System.out.println("\n--- 매출/주문 통계 ---");
-	            System.out.println("1. 특정 기간 매출 조회      ");
-	            System.out.println("2. 인기 상품 TOP N 조회         ");
-	            System.out.println("3. 주문 상태별 건수 조회        ");
-	            System.out.println("0. 뒤로가기                     ");
+	            System.out.println("1. 특정 기간 매출 조회");
+	            System.out.println("2. 인기 상품 TOP N 조회");
+	            System.out.println("3. 주문 상태별 건수 조회");
+	            System.out.println("0. 뒤로 가기");
 	            System.out.print("선택> ");
 
 	            String input = scanner.nextLine();
@@ -115,7 +115,7 @@ public class ReportController {
 	                    break;
 
 	                case "0":
-	                    System.out.println("메뉴를 종료하고 이전 화면으로 돌아갑니다.");
+	                	System.out.println("상위 메뉴로 돌아갑니다.");
 	                    return;
 
 	                default:

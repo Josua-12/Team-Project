@@ -64,6 +64,7 @@ public class OrderController {
             case 3 -> inputAddress();
             case 4 -> confirmOrder();
             case 0 -> {
+            	System.out.println("상위 메뉴로 돌아갑니다.");
             	return;
             }
             default -> System.out.println("잘못된 선택입니다.");
@@ -95,6 +96,7 @@ public class OrderController {
             case 2 -> getOrderDetail();
             case 3 -> cancelOrder();
             case 0 -> {
+            	System.out.println("상위 메뉴로 돌아갑니다.");
             	return;
             }
             default -> System.out.println("잘못된 선택입니다.");
