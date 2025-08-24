@@ -36,14 +36,14 @@ public class CartController {
             System.out.println("3. 상품 삭제");
             System.out.println("4. 장바구니 비우기");
             System.out.println("0. 뒤로 가기");
-            System.out.print("메뉴를 선택하세요: ");
+            System.out.print("\n메뉴를 선택하세요: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                	System.out.print("추가할 상품 ID를 입력하세요 (예: prod-001): ");
+                	System.out.print("추가할 상품 ID를 입력하세요 (예: P001): ");
                     String productId = scanner.nextLine();
 
                     // 1. ProductRepository를 사용해 ID로 상품을 찾는다.

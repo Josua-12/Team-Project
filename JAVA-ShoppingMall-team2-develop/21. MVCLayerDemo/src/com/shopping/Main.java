@@ -116,7 +116,7 @@ public class Main {
         // 컨트롤러 생성
         UserController userController = new UserController(session);
         ProductController productController = new ProductController(productService, scanner);
-        OrderController orderController = new OrderController(orderService, session, scanner);
+        OrderController orderController = new OrderController(orderService, session, productService, cartRepo, scanner);
         CartController cartController = new CartController(productRepo, cartRepo);
         AdminController adminController = new AdminController(userService, orderService, productService, reportService);
         ReportController reportController = new ReportController(reportService);

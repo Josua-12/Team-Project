@@ -65,6 +65,9 @@ public class MainController {
 	                    case "4" -> safeRun(() -> orderController.orderHistoryMenu(), "주문 내역 처리");
 	                    case "5" -> safeRun(() -> userController.myPage(session.getUser()), "마이페이지");
 	                    case "6" -> safeRun(() -> userController.logout(), "로그아웃");
+	                    case "0" -> {
+	                    	return;
+	                    }
 	                    default -> warn();
 	                }
 	            } else { // ADMIN
@@ -80,6 +83,9 @@ public class MainController {
 	                    case "6" -> safeRun(() -> userController.logout(), "로그아웃");
 	                    case "7" -> safeRun(() -> adminController.handleProductManagement(), "관리/상품 관리");
 	                    case "8" -> safeRun(() -> adminController.handleUserManagement(), "관리/사용자 관리");
+	                    case "0" -> {
+	                    	return;
+	                    }
 	                    default -> warn();
 	                }
 	            }

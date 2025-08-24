@@ -13,6 +13,7 @@ public class User implements Serializable {
     protected String name;
     protected Role role;
     private int balance; // 사용자 잔액은 일반 User에게만 의미가 있을 수 있습니다.
+    private String address; // 배송 주소 필드 추가 2025.08.24 17:47 조수아
 
     public User() {
         this("", "", "", "");
@@ -34,6 +35,8 @@ public class User implements Serializable {
     public String getName() { return name; }
     public Role getRole() { return role; }
     public int getBalance() { return balance; }
+    // getAddress 추가 2025.08.24 17:47 조수아
+    public String getAddress() { return address; }
 
     public void setId(String id) { this.id = id; }
     public void setPassword(String password) { this.password = password; }
@@ -41,6 +44,8 @@ public class User implements Serializable {
     public void setName(String name) { this.name = name; }
     public void setRole(Role role) { this.role = role; }
     public void setBalance(int balance) { this.balance = balance; }
+	// setAddress 추가 2025.08.24 17:47 조수아
+    public void setAddress(String address) { this.address = address; }
 
 
     // 권한 관련 메서드 (기본 사용자 기준)

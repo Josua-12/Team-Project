@@ -78,14 +78,11 @@ public class ReportController {
 	        Scanner scanner = new Scanner(System.in);
 
 	        while (true) {
-	            System.out.println("\n┌───────────────────────────────┐");
-	            System.out.println("│        📊 매출/주문 통계        │");
-	            System.out.println("├───────────────────────────────┤");
-	            System.out.println("│ 1. 특정 기간 매출 조회          │");
-	            System.out.println("│ 2. 인기 상품 TOP N 조회         │");
-	            System.out.println("│ 3. 주문 상태별 건수 조회        │");
-	            System.out.println("│ 0. 뒤로가기                     │");
-	            System.out.println("└───────────────────────────────┘");
+	            System.out.println("\n--- 매출/주문 통계 ---");
+	            System.out.println("1. 특정 기간 매출 조회      ");
+	            System.out.println("2. 인기 상품 TOP N 조회         ");
+	            System.out.println("3. 주문 상태별 건수 조회        ");
+	            System.out.println("0. 뒤로가기                     ");
 	            System.out.print("선택> ");
 
 	            String input = scanner.nextLine();
