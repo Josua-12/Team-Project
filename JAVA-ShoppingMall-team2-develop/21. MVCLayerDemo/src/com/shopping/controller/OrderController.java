@@ -119,9 +119,16 @@ public class OrderController {
             cartItems.add(new OrderItem(productId, cartItem.getQuantity()));
         });
 
-        // 이후 주문 처리 로직
+        // 이후 주문 처리 로직 - 8.24 19:04 홍종학 주문완료 후 장바구니 비우기 로직 추가
         try {
             Order order = orderService.placeOrder(session.getUserId(), cartItems, Role.USER);
+            
+            //  주문 완료 후 장바구니 비우기 로직 추가
+            Cart cart = cartOpt.get();
+            cart.clear(); // 장바구니의 모든 상품을 제거합니다.
+            cartRepository.save(cart); // 변경된 장바구니 상태를 저장소에 반영합니다.
+            //  추가 끝
+
             System.out.println("장바구니 상품 주문 완료. 주문 ID: " + order.getOrderId());
         } catch (Exception e) {
             System.out.println("주문 중 오류 발생: " + e.getMessage());
