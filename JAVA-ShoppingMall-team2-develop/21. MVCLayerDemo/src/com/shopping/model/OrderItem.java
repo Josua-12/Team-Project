@@ -112,12 +112,17 @@ public class OrderItem implements Serializable {
         return Objects.hash(productId);
     }
 //
-    // 6. toString
     @Override
     public String toString() {
-        return String.format("%s(%s) x %d = %,d원", productName, productId, quantity, getLineTotal());
+        return String.format(
+            "상품ID: %s, 상품명: %s, 단가: %,d원, 수량: %d개, 합계: %,d원",
+            productId,
+            productName,
+            unitPrice,
+            quantity,
+            getLineTotal()
+        );
     }
-
     // ===== 팩토리(선택): Product 스냅샷으로부터 생성 =====
     // Product라는 별도의 상품 모델에서 OrderItem을 바로 만들 수 있는 편의 메서드
     // Product 정보를 복사해와서 OrderItem 생성
