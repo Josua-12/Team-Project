@@ -233,7 +233,7 @@ public class AdminController {
 
 
 	private void deactivateUser() {
-        System.out.println("\n== 회원 강제 탈퇴 ==");
+        System.out.println("\n--- 회원 강제 탈퇴 ---");
         System.out.print("탈퇴시킬 회원의 ID를 입력하세요: ");
         String id = scanner.nextLine().trim();
         if (userService.deleteUser(id)) {
@@ -322,7 +322,7 @@ public class AdminController {
 	}
 
 	private void displayUserDetails() {
-        System.out.println("\n== 회원 상세 정보 조회 ==");
+        System.out.println("\n--- 회원 상세 정보 조회 ---");
         System.out.print("조회할 회원의 ID를 입력하세요: ");
         String id = scanner.nextLine().trim();
         Optional<User> userOpt = Optional.ofNullable(userService.findById(id));
